@@ -1,0 +1,116 @@
+.home_page_banner{
+	height: 70vh;
+	background-color: #362FD9;
+}
+.title-heading{
+    color: var(--blue);
+}
+.main{
+    width: 90vw;
+    margin: auto;
+}
+.main h3 {
+    color: var(--grey);
+}
+.custom-shape-divider-bottom-1696315792 {
+    position: absolute;
+    bottom: 12.4rem;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1696315792 svg {
+    position: relative;
+    display: block;
+    width: calc(127% + 1.3px);
+    height: 133px;
+}
+
+.custom-shape-divider-bottom-1696315792 .shape-fill {
+    fill: #fff;
+}
+
+.form{
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    width: 30%;
+}
+
+.form .fa-search{
+    position: absolute;
+    top:2rem;
+    left: 2rem;
+    color: #9ca3af;
+}
+
+.form span{
+    position: absolute;
+    right: 2rem;
+    top: 1.2rem;
+    border-left: 1px solid #d1d5db;
+
+}
+
+.left-pan{
+    padding-left: 10px;
+    text-align: center;
+    color: grey;
+}
+
+.form-input{
+    height: 55px;
+    text-indent: 1rem;
+    border-radius: 30px !important;
+    padding: 2rem 2rem !important;
+}
+
+.form-input:focus{
+    box-shadow: none;
+    border:none;
+}
+.main-heading{
+    color: #191919;
+}
+
+.bhk swiper {
+/*  margin: 100px auto;*/
+  width: 100%;
+  height: 100%;
+}
+
+ .bhk .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+/*   background-color: rgb(206, 17, 17);*/
+}
+
+.bhk-slider{
+    height: 40vh;
+}
+
+.text-content{
+    width: 80%;
+    text-align: justify;
+}
+
+@media only screen and (max-width: 993px) {
+	.custom-shape-divider-bottom-1696315792 {
+        bottom: -1.6rem;
+    }
+    .form{
+        position: absolute;
+        top: 40%;
+        left: 25%;
+        width: 50%;
+    }
+}
+
+

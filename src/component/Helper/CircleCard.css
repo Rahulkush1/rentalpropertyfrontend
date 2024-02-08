@@ -1,0 +1,8 @@
+.circle{
+    border-radius: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+.circleCard{
+    width: 20rem !important;
+}

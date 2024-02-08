@@ -1,0 +1,29 @@
+.sortDiv{
+    width: 100%;
+}
+
+.sortDiv > div > div > button {
+	padding: 2px 15px;
+	border: none;
+	margin-bottom: 5%;
+}
+.activeGrid {
+	background-color: var(--blue);
+	color: white;
+	transition: all 0.5s;
+	transform: scale(1.01);
+	/* border-radius: 10px; */
+}
+.activeList {
+	background-color: var(--blue);
+	color: white;
+	transition: all 0.5s;
+	transform: scale(1.01);
+	/* border-radius: 10px; */
+}
+.scrollable{
+	height: 80rem !important;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+}

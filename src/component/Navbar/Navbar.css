@@ -1,0 +1,13 @@
+.navbar{
+	background-color: #362FD9 !important;
+}
+.nav-link-ltr:after {
+	display:block;
+	content: '';
+	width: inherit;
+	border-bottom: solid 3px white;  
+	transform: scaleX(0);  
+	transition: transform 250ms ease-in-out;
+  }
+  
+.nav-link-ltr:hover:after { transform: scaleX(1); }
