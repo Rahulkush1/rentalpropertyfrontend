@@ -43,7 +43,7 @@ function Navbar(    ) {
                 </li>
             </ul>
             <ul className="navbar-nav  ms-auto mb-2 mb-lg-0">
-                {isAuthenticated ? (
+                {isAuthenticated  ? (
                     <>
                     <li className="nav-item">
                         <Button href="/login" variant="outlined" color='success'  style={{color: "white"}}>Logout</Button>

@@ -1,10 +1,12 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import {Button} from "@mui/material";
+import { Link } from "react-router-dom";
+
 export default function PropCard({ data }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -23,7 +25,9 @@ export default function PropCard({ data }) {
             Lizards are a widespread group of squamate reptiles, with over 6,000
             species, ranging across 
           </Typography>
+          <Link to={`/properties/${data.attributes.id}`}>
             <Button variant="contained" className="mx-4 my-3">Show</Button>
+          </Link>
             <Button variant="outlined" href="#contained-buttons">
               Schedule
             </Button>
@@ -32,3 +36,4 @@ export default function PropCard({ data }) {
     </Card>
   );
 }
+

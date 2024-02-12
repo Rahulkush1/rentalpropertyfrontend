@@ -11,6 +11,7 @@ import store from './store'
 import { loadUser } from './Slice/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Property from './component/Property/Property'
+import PropertyDetails from './component/Property/PropertyDetails'
 
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/properties',
     element: <Property />
+  },
+  {
+    path: '/properties/:id',
+    element: <PropertyDetails />
   }
 
 ])
@@ -42,6 +47,7 @@ export default function App() {
       dispatch(loadUser(token))
     }
   },[token])
+  
   return (
     <>
     

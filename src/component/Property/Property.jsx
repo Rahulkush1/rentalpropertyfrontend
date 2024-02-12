@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropCard from '../Helper/Card'
-import { fetchAllProperty, gridView, listView } from '../../Slice/propertySlice'
+import { fetchAllProperty, fetchTotalPropertyCount, gridView, listView } from '../../Slice/propertySlice'
 import './Property.css'
 import ReorderIcon from '@mui/icons-material/Reorder';
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -12,11 +12,13 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Breadcrumb from '../Helper/Breadcrumb'
+import Loader from '../Helper/Loader'
 
 const Property = () => {
 
 
-    const {properties, loading, view} = useSelector(state => state.properties)
+    const {properties, loading, view, totalpropertycount} = useSelector(state => state.properties)
     const dispatch = useDispatch()
     const [price, setPrice] = useState([0, 5000]);
     const [pagination, setPagination] = useState({
@@ -35,13 +37,18 @@ const Property = () => {
     const ListView = () => {
         dispatch(listView())
     }
-    console.log(pagination)
     useEffect(()=>{
         dispatch(fetchAllProperty(pagination))
+        dispatch(fetchTotalPropertyCount())
     },[dispatch,pagination])
   return (
-    <>
+    <>  {
+        loading ? <Loader /> : (
+
         <div className=" m-5 ">
+            <div className='grey my-3'>
+                <Breadcrumb />
+            </div>
         <div className='row'>
             <div className="col-lg-2 " style={{'border-right': "1px  solid var(--grey)"}}>
                 <div className="main_filter">
@@ -63,7 +70,7 @@ const Property = () => {
                                 <TextField id="outlined-basic" label="Search" variant="outlined" />
                             </Box>
                         </div>
-                        <h2 style={{'color': 'var(--blue)'}}> Properties ({ properties.length})</h2>
+                        <h2 style={{'color': 'var(--blue)'}}> Properties  ({ properties.length})</h2>
                         <div class="d-flex justify-content-between"> 
                             <div class="d-flex  mx-4">
                                 <button id="list" onClick={ListView} className= { view === 'list' ? 'activeList px-3 py-2 border-0' : ""} >
@@ -82,7 +89,7 @@ const Property = () => {
                         }
                     <div className='d-flex justify-content-center'>
                         <Stack spacing={2}>
-                            <Pagination count={Math.ceil(properties.length/(pagination.perPage))} variant="outlined" shape="rounded" onClick={setPageNo}/>
+                            <Pagination count={Math.ceil(totalpropertycount.total_Property_count/(pagination.perPage))} variant="outlined" shape="rounded" onClick={setPageNo}/>
                         </Stack>
                     </div>
                     </div>
@@ -90,6 +97,8 @@ const Property = () => {
             </div>
         </div>
         </div>
+        )
+    }
     </>
   )
 }
