@@ -15,6 +15,7 @@ import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProperty, fetchRecomendendProperty } from '../../Slice/propertySlice';
 import Cities from '../Helper/Cities';
+import Loader from '../Helper/Loader';
 
 
 
@@ -59,7 +60,9 @@ function Home() {
   },[])
 
   return (
-    <>
+    <>  {
+      loading ? <Loader /> : (
+        <>
           <div className="home_page_banner"></div>
           <div className="custom-shape-divider-bottom-1696315792">
               <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -164,6 +167,9 @@ function Home() {
 
             </div>
           </main>
+        </>
+      )
+    }
           
     </>
   )

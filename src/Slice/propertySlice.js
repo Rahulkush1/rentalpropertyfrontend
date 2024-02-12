@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { BASE_URL } from "../App"
 import axios from "axios"
-import userSlice from "./userSlice"
 
  
 
 const initialState = {
     properties: [],
     recomended_properties: [],
+    property: {},
     loading: true,
-    view: "grid"
+    view: "grid",
+    totalpropertycount: 0
 }
 
 const propertySlice = createSlice({
@@ -38,6 +39,16 @@ const propertySlice = createSlice({
         .addCase(fetchRecomendendProperty.rejected,(state,action) => {
             state.loading = true
         })
+        .addCase(fetchTotalPropertyCount.fulfilled,(state,action) => {
+            state.totalpropertycount = action.payload
+        })
+        .addCase(fetchPropertyDetails.fulfilled, (state,action) => {
+            state.property = action.payload
+            state.loading = false
+        })
+        .addCase(fetchPropertyDetails.pending, (state,action) => {
+            state.loading = true
+        })
     }
 })
 
@@ -64,6 +75,32 @@ export const fetchRecomendendProperty = createAsyncThunk('property/recomended/fe
     return resp.data.data
 })
 
+export const fetchTotalPropertyCount = createAsyncThunk('property/count', async()=> {
+    
+    const config = {
+        headers: {
+            'Content-Type': "application/json",
+            'auth_token': sessionStorage.getItem('token')
+        }
+    }
+    const resp = await axios.get(`${BASE_URL}/properties/total_Property_count`,config)
+    return resp.data    
+})
+
+export const fetchPropertyDetails = createAsyncThunk('fetch/propertyDetails', async(id) => {
+    const config = {
+        headers: {
+            'Content-Type': "application/json",
+            'auth_token': sessionStorage.getItem('token')
+        }
+    }
+    const resp = await axios.get(`${BASE_URL}/properties/property_detail?id=${id}`,config)
+  
+    return resp.data.data.attributes   
+})
+export const filterProperties = createAsyncThunk('filter/properties', async({filters}) => {
+    console.log(filters)
+})
 export const  {gridView, listView}  = propertySlice.actions
 
 export default propertySlice.reducer
