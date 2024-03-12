@@ -13,8 +13,11 @@ import './Home.css'
 import FlatImg from '../Images/flat_img.png';
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProperty, fetchRecomendendProperty } from '../../Slice/propertySlice';
+// import { fetchAllProperty, fetchProperty, fetchRecomendendProperty } from '../../Slice/propertySlice'; 
 import Cities from '../Helper/Cities';
+import Loader from '../Helper/Loader';
+import { fetchAllProperty } from '../../Action/propertyAction';
+
 
 
 
@@ -52,14 +55,16 @@ function Home() {
     },
   ]
   const dispatch = useDispatch();
-  const {recomended_properties, loading} = useSelector(state => state.properties)
+  const {properties, loading} = useSelector(state => state.properties)
 
   useEffect(()=> {
-    dispatch(fetchRecomendendProperty())
-  },[])
+    // dispatch(fetchRecomendendProperty())
+    dispatch(fetchAllProperty())
+  },[dispatch])
 
   return (
-    <>
+      loading ? <Loader /> : (
+        <>
           <div className="home_page_banner"></div>
           <div className="custom-shape-divider-bottom-1696315792">
               <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -87,7 +92,7 @@ function Home() {
             <div className='properties my-5' >
                 <h3 className='main-heading my-3'>Recommended By  <span className=" title-heading"> Cities</span> </h3>
                 <div className="row">
-                {recomended_properties.map((current, index)=>{
+                {properties && properties.map((current, index)=>{
                     return (
                       <>
                         <div className="col-lg-3 gy-5">
@@ -165,7 +170,8 @@ function Home() {
             </div>
           </main>
           
-    </>
+        </>
+  )
   )
 }
 

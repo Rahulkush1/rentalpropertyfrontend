@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropCard from '../Helper/Card'
-import { fetchAllProperty, gridView, listView } from '../../Slice/propertySlice'
+import { fetchAllProperty, fetchTotalPropertyCount, gridView, listView } from '../../Slice/propertySlice'
 import './Property.css'
 import ReorderIcon from '@mui/icons-material/Reorder';
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Breadcrumb from '../Helper/Breadcrumb'
+import Loader from '../Helper/Loader'
 
 const Property = () => {
 

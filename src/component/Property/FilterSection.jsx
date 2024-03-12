@@ -59,7 +59,7 @@ const FilterSection = (props) => {
         <hr style={{'color': "black"}}/>
         <p className='text-dark fs-5'>Type</p>
         <ul className="categoris">
-					{propertyType.map((type,index) => (
+					{propertyType && propertyType.map((type,index) => (
 						<li
 							className="category-link"
 							key={index}
