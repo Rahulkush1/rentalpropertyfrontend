@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { fetchPropertyDetails } from "../../Slice/propertySlice";
 import "./PropertyDetails.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -19,14 +18,16 @@ import SwimmingPool from "./../Images/swimming-pool.png";
 import FoodServiceIcon from './../Images/catering.png'
 import Breadcrumb from "../Helper/Breadcrumb";
 import Loader from "../Helper/Loader";
+import { fetchPropertyDetails } from "../../Action/propertyAction";
 
 const PropertyDetails = () => {
+
+  const {property, loading } = useSelector((state) => state.properties);
   const dispatch = useDispatch();
-  const { properties,property, loading } = useSelector((state) => state.properties);
   const { id } = useParams();
   useEffect(() => {
-    dispatch(fetchPropertyDetails(id));
-  }, [dispatch, id]);
+      dispatch(fetchPropertyDetails(id));
+  }, [id, dispatch]);
   return (
     <>
       {loading ? (
@@ -55,7 +56,8 @@ const PropertyDetails = () => {
                       modules={[Autoplay, Pagination, Navigation]}
                       className="mySwiper"
                     >
-                      {property.avatar.map((data, index) => {
+                      {property && property.avatar.map((data, index) => {
+
                         return (
                           <>
                             <SwiperSlide key={index}>
@@ -104,7 +106,7 @@ const PropertyDetails = () => {
                   className="amenities  d-flex justify-content-around w-50 "
                   style={{ color: "var(--grey)" }}
                 >
-                  {property.amenities.map((data, index) => {
+                  {property && property.amenities && property.amenities.map((data, index) => {
                     return (
                       <>
                         {index < 3 ? (
@@ -231,7 +233,7 @@ const PropertyDetails = () => {
               <div>
                 <h3 className="my-4" style={{color: "var(--grey)"}}>Amenities</h3>
                 <div className="row p-4">
-                  {property.amenities.map((data, index) => {
+                  {property && property.amenities && property.amenities.map((data, index) => {
                     return (
                       <>
                       <div className="col-lg-6 text-secondary">

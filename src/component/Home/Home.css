@@ -12,6 +12,12 @@
 .main h3 {
     color: var(--grey);
 }
+.lightTheme{
+    color: white;
+}
+.darkTheme{
+   color: #191919;
+}
 .custom-shape-divider-bottom-1696315792 {
     position: absolute;
     bottom: 12.4rem;
