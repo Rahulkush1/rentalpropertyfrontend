@@ -9,6 +9,9 @@
 ::-webkit-scrollbar {
   display: none;
 }
+.grey{
+  color: var(--grey);
+}
 
 @keyframes App-logo-spin {
   from {

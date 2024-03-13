@@ -5,7 +5,7 @@ const Grid= ({properties}) => {
   return (
     <>
         {
-            properties.map((currentData,index)=>{
+            properties && properties.map((currentData,index)=>{
                 return (
                     <>
                         <div className="col-lg-3">

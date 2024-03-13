@@ -63,6 +63,7 @@ function Home() {
   },[dispatch])
 
   return (
+    <>  {
       loading ? <Loader /> : (
         <>
           <div className="home_page_banner"></div>
@@ -169,6 +170,9 @@ function Home() {
 
             </div>
           </main>
+        </>
+      )
+    }
           
         </>
   )

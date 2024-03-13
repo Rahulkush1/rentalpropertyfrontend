@@ -1,14 +1,12 @@
 
 import React, { useEffect } from "react";
-
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import { Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-
+import {Button} from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function PropCard({ data }) {
   // const navigate = useNavigate();
@@ -36,8 +34,7 @@ export default function PropCard({ data }) {
           <a href={`/properties/${data.attributes.id}`}>
             <Button
               variant="contained"
-              className="mx-4 my-3"
-             
+              className="mx-4 my-3"    
             >
               Show
             </Button>
@@ -51,3 +48,4 @@ export default function PropCard({ data }) {
     </Card>
   );
 }
+

@@ -5,6 +5,7 @@ import './filterSection.css'
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Loader from '../Helper/Loader';
 
 function valuetext(value) {
     return `${value}°C`;
@@ -86,7 +87,6 @@ const FilterSection = (props) => {
 						onChange={ratingHandler}
 					/>
 				</fieldset>
-
 			</div>
    </>
   )

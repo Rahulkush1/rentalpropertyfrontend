@@ -15,6 +15,7 @@ import PropertyDetails from './component/Property/PropertyDetails'
 import { useGetUserDetailsQuery } from './services/auth/authService'
 
 
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: '/properties',
     element: <Property />
+  },
+  {
+    path: '/properties/:id',
+    element: <PropertyDetails />
   }
 
 ])

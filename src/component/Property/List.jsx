@@ -5,8 +5,7 @@ const List = ({properties}) => {
   return (
     <>
         {
-            properties.map((currentData,index)=>{
-                console.log(currentData)
+           properties && properties.map((currentData,index)=>{
                 return (
                     <>
                         <div className="">

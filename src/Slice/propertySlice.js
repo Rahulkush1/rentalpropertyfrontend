@@ -13,7 +13,6 @@ const initialState = {
   error: null,
 };
 
-
 const propertySlice = createSlice({
   name: "properties",
   initialState,
@@ -107,6 +106,18 @@ export const fetchTotalPropertyCount = createAsyncThunk(
     }
   }
 );
+
+export const fetchTotalPropertyCount = createAsyncThunk('property/count', async()=> {
+    
+    const config = {
+        headers: {
+            'Content-Type': "application/json",
+            'auth_token': sessionStorage.getItem('token')
+        }
+    }
+    const resp = await axios.get(`${BASE_URL}/properties/total_Property_count`,config)
+    return resp.data    
+})
 
 export const filterProperties = createAsyncThunk(
   "filter/properties",

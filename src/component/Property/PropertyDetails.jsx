@@ -57,6 +57,7 @@ const PropertyDetails = () => {
                       className="mySwiper"
                     >
                       {property && property.avatar.map((data, index) => {
+
                         return (
                           <>
                             <SwiperSlide key={index}>
@@ -306,7 +307,6 @@ const PropertyDetails = () => {
             </div>
           </div>
         </div>
-   
       )}
     </>
   );
