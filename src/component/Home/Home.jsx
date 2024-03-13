@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { fetchAllProperty, fetchProperty, fetchRecomendendProperty } from '../../Slice/propertySlice'; 
 import Cities from '../Helper/Cities';
 import Loader from '../Helper/Loader';
-import { fetchAllProperty } from '../../Action/propertyAction';
+import {fetchRecomendendProperty } from '../../Action/propertyAction';
 
 
 
@@ -55,11 +55,10 @@ function Home() {
     },
   ]
   const dispatch = useDispatch();
-  const {properties, loading} = useSelector(state => state.properties)
+  const {recomdend, loading} = useSelector(state => state.properties)
 
   useEffect(()=> {
-    // dispatch(fetchRecomendendProperty())
-    dispatch(fetchAllProperty())
+    dispatch(fetchRecomendendProperty())
   },[dispatch])
 
   return (
@@ -93,7 +92,7 @@ function Home() {
             <div className='properties my-5' >
                 <h3 className='main-heading my-3'>Recommended By  <span className=" title-heading"> Cities</span> </h3>
                 <div className="row">
-                {properties && properties.map((current, index)=>{
+                {recomdend && recomdend.map((current, index)=>{
                     return (
                       <>
                         <div className="col-lg-3 gy-5">
@@ -173,10 +172,10 @@ function Home() {
         </>
       )
     }
-          
+
         </>
   )
-  )
+
 }
 
 export default Home

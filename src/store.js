@@ -3,15 +3,17 @@ import userSlice from "./Slice/userSlice";
 import propertySlice from "./Slice/propertySlice";
 import { authApi } from "./services/auth/authService";
 import { setupListeners } from '@reduxjs/toolkit/query'
+import { propertyApi } from "./services/auth/propertyService";
 
 const store = configureStore({
   reducer: {
     user: userSlice,
     properties: propertySlice,
     [authApi.reducerPath]: authApi.reducer,
+    [propertyApi.reducerPath]: propertyApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(authApi.middleware);
+    return getDefaultMiddleware().concat(authApi.middleware).concat(propertyApi.middleware)
   },
 });
 // setupListeners(store.dispatch)
