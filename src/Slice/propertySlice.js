@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BASE_URL } from "../App";
 import axios from "axios";
-import { fetchAllProperty, fetchPropertyDetails } from "../Action/propertyAction";
+import { fetchAllProperty, fetchPropertyDetails, fetchRecomendendProperty, filterProperties } from "../Action/propertyAction";
 
 const initialState = {
   properties: [],
-  recomended_properties: [],
   property: {},
   loading: true,
   view: "grid",
   totalpropertycount: 0,
   error: null,
+  recomdend: null,
+  filterProperty: null,
 };
 
 const propertySlice = createSlice({
@@ -23,6 +24,10 @@ const propertySlice = createSlice({
     listView(state) {
       state.view = "list";
     },
+    setProperty: (state,{payload}) => {
+        state.loading  = false;
+        state.properties = payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -38,14 +43,6 @@ const propertySlice = createSlice({
         state.loading = false;
         state.error = null;
       })
-      .addCase(fetchRecomendendProperty.fulfilled, (state, action) => {
-        state.recomended_properties = action.payload;
-        state.loading = false;
-      })
-      .addCase(fetchRecomendendProperty.rejected, (state, action) => {
-        state.loading = true;
-        state.error = action.payload;
-      })
       .addCase(fetchTotalPropertyCount.fulfilled, (state, action) => {
         state.totalpropertycount = action.payload;
       })
@@ -60,31 +57,36 @@ const propertySlice = createSlice({
       .addCase(fetchPropertyDetails.rejected, (state, {payload}) => {
         state.loading = false;
         state.error = payload;
-      });
+      })
+      .addCase(fetchRecomendendProperty.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchRecomendendProperty.fulfilled,(state, {payload}) => {
+        state.loading = false;
+        state.recomdend = payload;
+        state.error = null;
+      })
+      .addCase(fetchRecomendendProperty.rejected,(state,{payload})=>{
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(filterProperties.pending,(state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(filterProperties.fulfilled,(state, {payload}) => {
+        console.log(payload)
+        state.loading = false;
+        state.filterProperty = payload;
+        state.error = null;
+      })
+      .addCase(filterProperties.rejected, (state,{payload}) => {
+        state.error = payload;
+        state.loading = false;
+      })
   },
 });
-
-
-export const fetchRecomendendProperty = createAsyncThunk(
-  "property/recomended/fetch",
-  async ({ rejectWithValue }) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        auth_token: sessionStorage.getItem("token"),
-      },
-    };
-    try {
-      const resp = await axios.get(
-        `${BASE_URL}/properties?recomended_property=true`,
-        config
-      );
-      return resp.data.data;
-    } catch (error) {
-      rejectWithValue(error);
-    }
-  }
-);
 
 export const fetchTotalPropertyCount = createAsyncThunk(
   "property/count",
@@ -107,24 +109,19 @@ export const fetchTotalPropertyCount = createAsyncThunk(
   }
 );
 
-export const fetchTotalPropertyCount = createAsyncThunk('property/count', async()=> {
+// export const fetchTotalPropertyCount = createAsyncThunk('property/count', async()=> {
     
-    const config = {
-        headers: {
-            'Content-Type': "application/json",
-            'auth_token': sessionStorage.getItem('token')
-        }
-    }
-    const resp = await axios.get(`${BASE_URL}/properties/total_Property_count`,config)
-    return resp.data    
-})
+//     const config = {
+//         headers: {
+//             'Content-Type': "application/json",
+//             'auth_token': sessionStorage.getItem('token')
+//         }
+//     }
+//     const resp = await axios.get(`${BASE_URL}/properties/total_Property_count`,config)
+//     return resp.data    
+// })
 
-export const filterProperties = createAsyncThunk(
-  "filter/properties",
-  async ({ filters }) => {
-    console.log(filters);
-  }
-);
-export const { gridView, listView } = propertySlice.actions;
+
+export const { gridView, listView,setProperty } = propertySlice.actions;
 
 export default propertySlice.reducer;

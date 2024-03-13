@@ -60,3 +60,57 @@ export const fetchPropertyDetails = createAsyncThunk(
     }
   }
 );
+
+export const fetchRecomendendProperty = createAsyncThunk(
+  "fetch/recomanded/properties",
+  async (id, { rejectWithValue }) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth_token: localStorage.getItem("userToken"),
+      },
+    };
+    try {
+      const resp = await axios.get(
+        `${BASE_URL}/properties?recomended_property=true`,
+        config
+      );
+      return resp.data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+
+export const filterProperties = createAsyncThunk(
+  "filter/properties",
+  async (filter , {rejectWithValue}) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth_token: localStorage.getItem("userToken"),
+      },
+    };
+    try {
+
+      const {sort_option, min_price, max_price, prop_type} = filter
+        const resp = await axios.get(
+          `${BASE_URL}/properties/filter_property?sort_option=${sort_option}&min_price=${min_price}&max_price=${max_price}`,
+          config
+        );
+        console.log(resp.data)
+      return resp.data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

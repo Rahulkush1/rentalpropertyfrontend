@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import {Button} from "@mui/material";
 import { Link } from "react-router-dom";
+import Formatprice from "./FormatPrice";
 
 export default function PropCard({ data }) {
   // const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function PropCard({ data }) {
   // };
 
   return (
+    <Link to={`/properties/${data.attributes.id}`} className="text-decoration-none" >
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
@@ -27,18 +29,21 @@ export default function PropCard({ data }) {
           <Typography gutterBottom variant="h5" component="div">
             {data.attributes.name}
           </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            <Formatprice price={data.attributes.price} />
+          </Typography>
           <Typography variant="body2" color="text.secondary">
             Lizards are a widespread group of squamate reptiles, with over 6,000
             species, ranging across
           </Typography>
-          <a href={`/properties/${data.attributes.id}`}>
+          <Link to={`/properties/${data.attributes.id}`}>
             <Button
               variant="contained"
               className="mx-4 my-3"    
             >
               Show
             </Button>
-          </a>
+          </Link>
 
           <Button variant="outlined" href="#contained-buttons">
             Schedule
@@ -46,6 +51,7 @@ export default function PropCard({ data }) {
         </CardContent>
       </CardActionArea>
     </Card>
+    </Link>
   );
 }
 

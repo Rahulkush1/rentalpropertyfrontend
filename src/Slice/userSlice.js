@@ -20,9 +20,14 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    logout: (state , action) => {
+      state.userInfo = {};
+      localStorage.removeItem('userToken');
+      state.userToken = null;
+      state.  isAuthenticated = false;
+    },
     setCredentials: (state, { payload }) => {
       state.userInfo = payload;
-      state.isAuthenticated = true
     },
   },
   extraReducers: (builder) => {
@@ -41,9 +46,11 @@ const userSlice = createSlice({
     .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
+        state.isAuthenticated = false;
+
     })
   },
 });
 
-export const {setCredentials} = userSlice.actions;
+export const {logout, setCredentials} = userSlice.actions;
 export default userSlice.reducer;
