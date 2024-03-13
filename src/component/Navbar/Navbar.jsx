@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '@mui/material/Button';
 import './Navbar.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../../Slice/userSlice';
+import { useGetUserDetailsQuery } from '../../services/auth/authService';
 
 
 function Navbar(    ) {
+    const dispatch = useDispatch()
     const navVisibility = window.location.pathname === '/login' || window.location.pathname === '/signup' ? {
         position: 'unset'
     } : {
@@ -12,8 +15,15 @@ function Navbar(    ) {
         top: '0',
         zIndex: '1020'
     }
-    const {userdetail , isAuthenticated , loading} = useSelector(state => state.user)
-
+    const {userInfo , isAuthenticated , loading} = useSelector(state => state.user)
+    const {data, isFetching} = useGetUserDetailsQuery('userDetails',{
+        pollingInterval: 800000,
+      })
+    useEffect(()=>{
+        if(data){
+          dispatch(setCredentials(data))
+          }
+      },[dispatch,data])
   return (
     <>
         <nav className='navbar navbar-expand-lg sticky-top navbar-dark py-3 ' style={navVisibility} >

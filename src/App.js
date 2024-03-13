@@ -8,10 +8,12 @@ import { createBrowserRouter } from 'react-router-dom';
 import "./App.css"
 import Login from './component/Authentication/Login'
 import store from './store'
-import { loadUser } from './Slice/userSlice'
+import { loadUser, setCredentials } from './Slice/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Property from './component/Property/Property'
 import PropertyDetails from './component/Property/PropertyDetails'
+import { useGetUserDetailsQuery } from './services/auth/authService'
+
 
 
 const router = createBrowserRouter([
@@ -39,14 +41,18 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
- 
-  const dispatch = useDispatch()
-  const token = sessionStorage.getItem('token')
-  useEffect(()=>{
-    if (sessionStorage.getItem('authenticated')){
-      dispatch(loadUser(token))
-    }
-  },[token])
+
+  // const dispatch = useDispatch()
+  // const {userInfo} = useSelector(state => state.user)
+
+  // const {data, isFetching} = useGetUserDetailsQuery('userDetails',{
+  //   pollingInterval: 800000,
+  // })
+  // useEffect(()=>{
+  //   if(data){
+  //     dispatch(setCredentials(data))
+  //     }
+  // },[dispatch,data])
   
   return (
     <>
