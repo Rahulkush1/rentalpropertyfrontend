@@ -72,7 +72,7 @@ const Property = () => {
     dispatch(filterProperties(filter))
     dispatch(fetchAllProperty(pagination));
     dispatch(fetchTotalPropertyCount());
-  }, [dispatch, pagination,filter]);
+  }, [filter,dispatch, pagination]);
   return (
     <>
       {" "}

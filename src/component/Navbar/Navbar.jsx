@@ -25,10 +25,10 @@ function Navbar() {
     (state) => state.user
   );
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
-    pollingInterval: 800000,
+    pollingInterval: 20000,
   });
   const { data1, isloading } = useGetPropertiesQuery("properties", {
-    pollingInterval: 800000,
+    pollingInterval: 20000,
   });
 
   const userlogout = () => {

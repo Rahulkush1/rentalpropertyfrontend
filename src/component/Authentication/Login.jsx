@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../Slice/userSlice";
+import { clearErrors, fetchUser } from "../../Slice/userSlice";
 import { userLogin } from "../../Action/userAction";
+import { toast } from "react-toastify";
+
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const { userInfo, loading, isAuthenticated ,error} = useSelector((state) => state.user);
+  const { userInfo, loading, isAuthenticated, error } = useSelector(
+    (state) => state.user
+  );
   const HandleLogin = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -24,8 +28,32 @@ function Login() {
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
+      toast.success("Login Successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
-  }, [isAuthenticated,navigate]);
+
+    if (error) {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      dispatch(clearErrors());
+    }
+  }, [isAuthenticated, navigate, toast, error,dispatch]);
 
   return (
     <>
