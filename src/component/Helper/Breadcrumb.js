@@ -1,11 +1,9 @@
 import * as React from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Typography from '@mui/material/Typography';
 // import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {  Link,useLocation, useNavigate } from 'react-router-dom';
-
 
 
 export default function Breadcrumb() {
@@ -13,11 +11,10 @@ export default function Breadcrumb() {
   const navigate = useNavigate()
   const {pathname} = location;
   const segment = pathname.split('/')
-
   let url = '';
   function handleClick(event) {
     event.preventDefault();
-    console.log(event.target.attributes.href.value)
+
     navigate(event.target.attributes.href.value) 
    
   }
@@ -31,7 +28,6 @@ export default function Breadcrumb() {
       </Link>
     )
   })
-
 
   return (
     <Stack spacing={2}>

@@ -32,8 +32,9 @@ const propertySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllProperty.fulfilled, (state, { payload }) => {
-        state.properties  = payload;
+        state.properties  = payload.properties.data;
         state.loading = false;
+        state.totalpropertycount = payload.total_property_count
       })
       .addCase(fetchAllProperty.rejected, (state, { payload }) => {
         state.loading = false;
@@ -42,9 +43,6 @@ const propertySlice = createSlice({
       .addCase(fetchAllProperty.pending, (state) => {
         state.loading = false;
         state.error = null;
-      })
-      .addCase(fetchTotalPropertyCount.fulfilled, (state, action) => {
-        state.totalpropertycount = action.payload;
       })
       .addCase(fetchPropertyDetails.fulfilled, (state, {payload}) => {
         state.property = payload;
@@ -88,26 +86,6 @@ const propertySlice = createSlice({
   },
 });
 
-export const fetchTotalPropertyCount = createAsyncThunk(
-  "property/count",
-  async ({ rejectWithValue }) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        auth_token: sessionStorage.getItem("token"),
-      },
-    };
-    try {
-      const resp = await axios.get(
-        `${BASE_URL}/properties/total_Property_count`,
-        config
-      );
-      return resp.data;
-    } catch (error) {
-      rejectWithValue(error);
-    }
-  }
-);
 
 // export const fetchTotalPropertyCount = createAsyncThunk('property/count', async()=> {
     
@@ -120,7 +98,7 @@ export const fetchTotalPropertyCount = createAsyncThunk(
 //     const resp = await axios.get(`${BASE_URL}/properties/total_Property_count`,config)
 //     return resp.data    
 // })
-
+  
 
 export const { gridView, listView,setProperty } = propertySlice.actions;
 

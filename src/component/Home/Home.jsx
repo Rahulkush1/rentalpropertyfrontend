@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SLider from "../Helper/SLider";
@@ -9,77 +9,97 @@ import "swiper/css/effect-creative";
 import { EffectCreative, Autoplay } from "swiper/modules";
 // import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
-import "./Home.css";
 import FlatImg from "../Images/flat_img.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { fetchAllProperty, fetchProperty, fetchRecomendendProperty } from '../../Slice/propertySlice';
-import Cities from "../Helper/Cities";
 import Loader from "../Helper/Loader";
 import { fetchRecomendendProperty } from "../../Action/propertyAction";
-import { toast } from "react-toastify";
-import { Country, State, City }  from 'country-state-city';
 
+import {
+  fetchCityByCountry,
+  fetchCityByStateCountry,
+} from "../../Slice/citySlice";
+import "./Home.css";
+
+// const citiess = [
+//   {
+//     id: 1,
+//     name: "demo1",
+//     imgSrc: "https://picsum.photos/200/200",
+//   },
+//   {
+//     id: 2,
+//     name: "demo2",
+//     imgSrc: "https://picsum.photos/200/200",
+//   },
+//   {
+//     id: 3,
+//     name: "demo3",
+//     imgSrc: "https://picsum.photos/200/200",
+//   },
+//   {
+//     id: 4,
+//     name: "demo4",
+//     imgSrc: "https://picsum.photos/200/200",
+//   },
+//   {
+//     id: 5,
+//     name: "demo5",
+//     imgSrc: "https://picsum.photos/200/200",
+//   },
+//   {
+//     id: 6,
+//     name: "demo6",
+//     imgSrc: "https://picsum.photos/200/200",
+//   },
+// ];
+
+
+const getRandomCities = (cities, numCities) => {
+  const shuffledCities = [...cities]; // Make a copy of the original array
+
+  // Fisher-Yates shuffle algorithm
+  for (let i = shuffledCities.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledCities[i], shuffledCities[j]] = [shuffledCities[j], shuffledCities[i]];
+  }
+
+  return shuffledCities.slice(0, numCities); // Return a slice containing the desired number of cities
+};
 
 function Home() {
-  const cities = [
-    {
-      id: 1,
-      name: "demo1",
-      imgSrc: "https://picsum.photos/200/200",
-    },
-    {
-      id: 2,
-      name: "demo2",
-      imgSrc: "https://picsum.photos/200/200",
-    },
-    {
-      id: 3,
-      name: "demo3",
-      imgSrc: "https://picsum.photos/200/200",
-    },
-    {
-      id: 4,
-      name: "demo4",
-      imgSrc: "https://picsum.photos/200/200",
-    },
-    {
-      id: 5,
-      name: "demo5",
-      imgSrc: "https://picsum.photos/200/200",
-    },
-    {
-      id: 6,
-      name: "demo6",
-      imgSrc: "https://picsum.photos/200/200",
-    },
-  ];
-  const notify = () => {
-    toast.success("🦄 Wow so easy!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  };
-  
   const dispatch = useDispatch();
-  const {userInfo} = useSelector(state => state.user)
+  const navigate = useNavigate();
+  const {
+    userInfo,
+
+    isAuthenticated,
+  } = useSelector((state) => state.user);
+  // userInfo = JSON.parse(userInfo)
   const { recomdend, loading } = useSelector((state) => state.properties);
-  if(userInfo){
-    console.log(userInfo)
-    const city = City.getCitiesOfState('IN', 'MP')
+  const { cities, state_cities } = useSelector((state) => state.cities);
+  const [keyword, setKeyword] = useState();
+  let randomCities ;
+  if (userInfo) {
+     randomCities =  getRandomCities(state_cities, 12);
   }
-  // console.log(city)
+  const HandleKeyword = (e) => {
+    let value = e.target.value;
+    setKeyword(value.toLowerCase());
+  };
 
+  const submitSearch = (e) => {
+    e.preventDefault();
+    navigate(`/properties?keyword=${keyword}`);
+  };
   useEffect(() => {
-
+    if(userInfo && isAuthenticated){
+      dispatch(fetchCityByStateCountry(userInfo))
+    }
     dispatch(fetchRecomendendProperty());
-  }, [dispatch]);
+    dispatch(fetchCityByCountry());
+  }, [dispatch, userInfo, isAuthenticated]);
 
   return (
     <>
@@ -107,14 +127,30 @@ function Home() {
               <div className="col-md-6">
                 <div className="form">
                   <i className="fa fa-search"></i>
-                  <input
-                    type="text"
-                    className="form-control form-input"
-                    placeholder="Search anything..."
-                  />
+                  <form onSubmit={submitSearch}>
+                    <input
+                      type="text"
+                      className="form-control form-input"
+                      placeholder="Search anything..."
+                      list="browsers"
+                      onChange={HandleKeyword}
+                      value={keyword}
+                    />
+                    <datalist id="browsers">
+                      {cities &&
+                        cities.map((data) => {
+                          return (
+                  
+                            <option value={data.name} id={data.id} />
+                            
+                        );
+                        })}
+                    </datalist>
+                  </form>
                   <span className="left-pan">
                     <KeyboardVoiceIcon />
                   </span>
+                  {/* <Search /> */}
                 </div>
               </div>
             </div>
@@ -124,7 +160,7 @@ function Home() {
               <h3 className="main-heading">
                 Choose By <span className=" title-heading"> Cities</span>{" "}
               </h3>
-              <SLider cities={cities} />
+              <SLider cities={randomCities} />
             </div>
             <div className="properties my-5">
               <h3 className="main-heading my-3">
@@ -132,13 +168,11 @@ function Home() {
               </h3>
               <div className="row">
                 {recomdend &&
-                  recomdend.map((current, index) => {
+                  recomdend.map((current) => {
                     return (
-                      <>
-                        <div className="col-lg-3 gy-5">
-                          <PropCard key={index} data={current} />
+                        <div className="col-lg-3 gy-5" key={current.attributes.id}>
+                          <PropCard  data={current} />
                         </div>
-                      </>
                     );
                   })}
               </div>
@@ -241,9 +275,6 @@ function Home() {
                   </Swiper>
                 </div>
               </div>
-            </div>
-            <div>
-              <button onClick={notify}>dfghjkl</button>
             </div>
           </main>
         </>

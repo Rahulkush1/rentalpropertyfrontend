@@ -5,10 +5,9 @@ import { useSelector } from "react-redux";
 
 export const fetchAllProperty = createAsyncThunk(
   "property/all/fetch",
-  async (pagination, { rejectWithValue }) => {
-    console.log(pagination);
-    // const { userToken } = useSelector((state) => state.user);
-    // console.log(userToken)
+  async (filter, { rejectWithValue }) => {
+    console.log(filter)
+    const {keyword = "", page,sort_option, min_price, max_price } = filter
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -17,11 +16,11 @@ export const fetchAllProperty = createAsyncThunk(
     };
     try {
       const resp = await axios.get(
-        `${BASE_URL}/properties?page=${pagination.page}&perPage=${pagination.perPage}`,
+        `${BASE_URL}/properties?keyword=${keyword}&sort_option=${sort_option}&min_price=${min_price}&max_price=${max_price}&page=${page}`,
         config
       );
 
-      return resp.data.data;
+      return resp.data;
     } catch (error) {
       console.log(error);
       // return custom error message from API if any

@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import "./filterSection.css";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import Loader from "../Helper/Loader";
-import { useDispatch } from "react-redux";
-import { filterProperties } from "../../Action/propertyAction";
 import { Button } from "@mui/material";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 function valuetext(value) {
