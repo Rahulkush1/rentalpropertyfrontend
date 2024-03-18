@@ -18,7 +18,6 @@ export const authApi = createApi({
       query: () => ({
         url: "/users/sessions",
         method: "GET",
-        responseHandler: (response) => response.text()
       }),
     }),
   }),

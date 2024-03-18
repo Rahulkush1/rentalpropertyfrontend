@@ -18,19 +18,14 @@ export default function SLider({cities}) {
       <Swiper
         slidesPerView={5}
         spaceBetween={0}
-        pagination={{
-          clickable: true,
-        }}
         modules={[Pagination]}
         className="mySwiper"
       >
-        {cities.map((currentValue, index) => {
+        {cities && cities.map((currentValue, index) => {
           return (
-            <>
-              <SwiperSlide>
-                <CircleCard key={index} data={currentValue} />
+              <SwiperSlide key={currentValue.id} >
+                <CircleCard  data={currentValue} />
               </SwiperSlide>
-            </>
           );
         })}
       </Swiper>

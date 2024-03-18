@@ -201,13 +201,13 @@ const PropertyDetails = () => {
             </div>
             <div className="col-lg-3">
               <div
-                class="card border-primary mb-3"
+                className="card border-primary mb-3"
                 style={{ maxWidth: "28rem" }}
               >
-                <div class="card-header">Header</div>
-                <div class="card-body text-primary">
-                  <h5 class="card-title">Primary card title</h5>
-                  <p class="card-text">
+                <div className="card-header">Header</div>
+                <div className="card-body text-primary">
+                  <h5 className="card-title">Primary card title</h5>
+                  <p className="card-text">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>
@@ -218,13 +218,13 @@ const PropertyDetails = () => {
                 </div>
               </div>
               <div
-                class="card border-primary mb-3"
+                className="card border-primary mb-3"
                 style={{ maxWidth: "28rem" }}
               >
-                <div class="card-header">Header</div>
-                <div class="card-body text-primary">
-                  <h5 class="card-title">Primary card title</h5>
-                  <p class="card-text">
+                <div className="card-header">Header</div>
+                <div className="card-body text-primary">
+                  <h5 className="card-title">Primary card title</h5>
+                  <p className="card-text">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>

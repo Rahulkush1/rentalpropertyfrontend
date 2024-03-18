@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -36,15 +36,12 @@ export default function PropCard({ data }) {
             Lizards are a widespread group of squamate reptiles, with over 6,000
             species, ranging across
           </Typography>
-          <Link to={`/properties/${data.attributes.id}`}>
             <Button
               variant="contained"
               className="mx-4 my-3"    
             >
               Show
             </Button>
-          </Link>
-
           <Button variant="outlined" href="#contained-buttons">
             Schedule
           </Button>

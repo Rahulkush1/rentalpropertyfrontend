@@ -2,13 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./Slice/userSlice";
 import propertySlice from "./Slice/propertySlice";
 import { authApi } from "./services/auth/authService";
-import { setupListeners } from '@reduxjs/toolkit/query'
+
 import { propertyApi } from "./services/auth/propertyService";
+import citySlice from "./Slice/citySlice";
 
 const store = configureStore({
   reducer: {
     user: userSlice,
     properties: propertySlice,
+    cities: citySlice,
     [authApi.reducerPath]: authApi.reducer,
     [propertyApi.reducerPath]: propertyApi.reducer,
   },

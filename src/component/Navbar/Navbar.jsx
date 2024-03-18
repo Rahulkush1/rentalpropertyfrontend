@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, setCredentials } from "../../Slice/userSlice";
-import { useGetUserDetailsQuery } from "../../services/auth/authService";
+import { logout } from "../../Slice/userSlice";
+
 import { Link } from "react-router-dom";
-import { useGetPropertiesQuery } from "../../services/auth/propertyService";
-import { setProperty } from "../../Slice/propertySlice";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -21,27 +19,30 @@ function Navbar() {
           top: "0",
           zIndex: "1020",
         };
-  const { userInfo, isAuthenticated, loading } = useSelector(
+  const {  isAuthenticated } = useSelector(
     (state) => state.user
   );
-  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
-    pollingInterval: 20000,
-  });
-  const { data1, isloading } = useGetPropertiesQuery("properties", {
-    pollingInterval: 20000,
-  });
+  // const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
+  //   pollingInterval: 20000,
+  // });
+  // const { data1, isloading } = useGetPropertiesQuery("properties", {
+  //   pollingInterval: 20000,
+  // });
 
+  // const userlogout = () => {
+  //   dispatch(logout());
+  // }
+  // useEffect(() => {
+  //   if (data) {
+  //     dispatch(setCredentials(data));
+  //   }
+  //   if(data1){
+  //       dispatch(setProperty(data1))
+  //   }
+  // }, [dispatch, data, data1]);
   const userlogout = () => {
     dispatch(logout());
   }
-  useEffect(() => {
-    if (data) {
-      dispatch(setCredentials(data));
-    }
-    if(data1){
-        dispatch(setProperty(data1))
-    }
-  }, [dispatch, data, data1]);
   return (
     <>
       <nav
