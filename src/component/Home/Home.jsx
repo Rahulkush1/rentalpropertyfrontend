@@ -5,14 +5,11 @@ import SLider from "../Helper/SLider";
 import PropCard from "../Helper/Card";
 import "swiper/css";
 import "swiper/css/effect-creative";
-// import required modules
 import { EffectCreative, Autoplay } from "swiper/modules";
-// import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import FlatImg from "../Images/flat_img.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { fetchAllProperty, fetchProperty, fetchRecomendendProperty } from '../../Slice/propertySlice';
 import Loader from "../Helper/Loader";
 import { fetchRecomendendProperty } from "../../Action/propertyAction";
 
@@ -21,68 +18,39 @@ import {
   fetchCityByStateCountry,
 } from "../../Slice/citySlice";
 import "./Home.css";
+import { toast } from "react-toastify";
+import { clearErrors } from "../../Slice/userSlice";
+import { userLocation } from "../../Action/userAction";
 
-// const citiess = [
-//   {
-//     id: 1,
-//     name: "demo1",
-//     imgSrc: "https://picsum.photos/200/200",
-//   },
-//   {
-//     id: 2,
-//     name: "demo2",
-//     imgSrc: "https://picsum.photos/200/200",
-//   },
-//   {
-//     id: 3,
-//     name: "demo3",
-//     imgSrc: "https://picsum.photos/200/200",
-//   },
-//   {
-//     id: 4,
-//     name: "demo4",
-//     imgSrc: "https://picsum.photos/200/200",
-//   },
-//   {
-//     id: 5,
-//     name: "demo5",
-//     imgSrc: "https://picsum.photos/200/200",
-//   },
-//   {
-//     id: 6,
-//     name: "demo6",
-//     imgSrc: "https://picsum.photos/200/200",
-//   },
-// ];
 
 
 const getRandomCities = (cities, numCities) => {
-  const shuffledCities = [...cities]; // Make a copy of the original array
+  const shuffledCities = [...cities]; 
 
-  // Fisher-Yates shuffle algorithm
+  
   for (let i = shuffledCities.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffledCities[i], shuffledCities[j]] = [shuffledCities[j], shuffledCities[i]];
+    [shuffledCities[i], shuffledCities[j]] = [
+      shuffledCities[j],
+      shuffledCities[i],
+    ];
   }
 
-  return shuffledCities.slice(0, numCities); // Return a slice containing the desired number of cities
+  return shuffledCities.slice(0, numCities); 
 };
 
 function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    userInfo,
-
-    isAuthenticated,
-  } = useSelector((state) => state.user);
-  // userInfo = JSON.parse(userInfo)
+  const { userInfo, location } = useSelector(
+    (state) => state.user
+  );
   const { recomdend, loading } = useSelector((state) => state.properties);
   const { cities, state_cities } = useSelector((state) => state.cities);
   const [keyword, setKeyword] = useState();
-  let randomCities ;
+  let randomCities;
   if (userInfo) {
-     randomCities =  getRandomCities(state_cities, 12);
+    randomCities = getRandomCities(state_cities, 50);
   }
   const HandleKeyword = (e) => {
     let value = e.target.value;
@@ -94,13 +62,47 @@ function Home() {
     navigate(`/properties?keyword=${keyword}`);
   };
   useEffect(() => {
-    if(userInfo && isAuthenticated){
-      dispatch(fetchCityByStateCountry(userInfo))
+    if (navigator.geolocation) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then(function (result) {
+          if ((result.state === "granted") || (result.state === "prompt")) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+              dispatch(
+                userLocation({
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude,
+                })
+              );
+            });
+          }else if (result.state === "denied") {
+            toast.error('Please allow Location Access!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
+          }
+        });
+    } else {
+      console.log("Geolocation is not available in your browser.");
     }
-    dispatch(fetchRecomendendProperty());
     dispatch(fetchCityByCountry());
-  }, [dispatch, userInfo, isAuthenticated]);
+  }, [dispatch, navigator,toast]);
 
+  useEffect(() => {
+    if (location) {
+      dispatch(fetchRecomendendProperty(location.city));
+      dispatch(fetchCityByStateCountry(location.state_code));
+
+    } else {
+      console.log("Location is not available yet.");
+    }
+  }, [dispatch, location]);
   return (
     <>
       {" "}
@@ -139,18 +141,13 @@ function Home() {
                     <datalist id="browsers">
                       {cities &&
                         cities.map((data) => {
-                          return (
-                  
-                            <option value={data.name} id={data.id} />
-                            
-                        );
+                          return <option value={data.name} id={data.id} />;
                         })}
                     </datalist>
                   </form>
                   <span className="left-pan">
                     <KeyboardVoiceIcon />
                   </span>
-                  {/* <Search /> */}
                 </div>
               </div>
             </div>
@@ -170,9 +167,12 @@ function Home() {
                 {recomdend &&
                   recomdend.map((current) => {
                     return (
-                        <div className="col-lg-3 gy-5" key={current.attributes.id}>
-                          <PropCard  data={current} />
-                        </div>
+                      <div
+                        className="col-lg-3 gy-5"
+                        key={current.attributes.id}
+                      >
+                        <PropCard data={current} />
+                      </div>
                     );
                   })}
               </div>

@@ -6,7 +6,6 @@ export const registerUser = createAsyncThunk(
     'auth/register',
     async ({ userData}, { rejectWithValue }) => {
       try {
-        console.log(userData)
         const {email , password } = userData
         const config = {
           headers: {
@@ -60,3 +59,26 @@ export const registerUser = createAsyncThunk(
       }
     }
   )
+
+  export const userLocation = createAsyncThunk('user/location', async ({latitude,longitude}, {rejectWithValue}) => {
+    try {
+      // configure header's Content-Type as JSON
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const {data}  = await axios.get(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=5b638185a6f44e1991c42f86f42660b2`
+      )       
+      return data.features[0].properties
+    } catch (error) {
+      // return custom error message from API if any
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  })
+
