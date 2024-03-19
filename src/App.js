@@ -8,7 +8,7 @@ import { createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import Login from "./component/Authentication/Login";
 import store from "./store";
-import { loadUser, setCredentials } from "./Slice/userSlice";
+import {  clearErrors, loadUser, setCredentials, setUserError } from "./Slice/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Property from "./component/Property/Property";
 import PropertyDetails from "./component/Property/PropertyDetails";
@@ -33,16 +33,17 @@ export default function App() {
   //     dispatch(setCredentials(data))
   //     }
   // },[dispatch,data])
-  const { userInfo, isAuthenticated, loading } = useSelector(
+  const { userInfo, error: userError,  isAuthenticated, loading } = useSelector(
     (state) => state.user
   );
-  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
-    pollingInterval: 90000000,
+  const { data,  isFetching } = useGetUserDetailsQuery("userDetails", {
+    pollingInterval: 9000000,
   });
   const { data1, isloading } = useGetPropertiesQuery("properties", {
-    pollingInterval: 90000000,
+    pollingInterval: 9000000,
   });
 
+  // dispatch(clearErrors());
  
   useEffect(() => {
     if (data) {

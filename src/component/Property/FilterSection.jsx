@@ -26,8 +26,9 @@ const FilterSection = (props) => {
     ratings,
     HandleChange,
     clearFilter,
+    HandleType
   } = props;
-  const [type, setType] = useState("");
+  
 
   return (
     <>
@@ -66,10 +67,7 @@ const FilterSection = (props) => {
               <li
                 className="category-link"
                 key={index}
-                onClick={() => {
-                  setType(type);
-                  // setFilter({...filter,prop_type: type})
-                }}
+                onClick={HandleType}
               >
                 {type}
               </li>

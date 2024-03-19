@@ -1,5 +1,5 @@
 import {createSlice } from "@reduxjs/toolkit";
-import { registerUser, userLogin } from "../Action/userAction";
+import { registerUser, userLocation, userLogin } from "../Action/userAction";
 
 
 
@@ -9,7 +9,8 @@ const initialState = {
   userToken: null,
   error: null,
   success: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  location: null
 };
 
  initialState.userToken = localStorage.getItem("userToken")
@@ -40,7 +41,6 @@ const userSlice = createSlice({
     .addCase(userLogin.pending, (state) => {
         state.loading = true;
         state.error = null;
-
     })
     .addCase(userLogin.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -68,6 +68,20 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = payload;
       state.success = false;
+    })
+    .addCase(userLocation.pending, (state) => {
+      state.loading =true;
+      state.error = null;
+    })
+    .addCase(userLocation.fulfilled, (state, {payload}) => {
+      state.loading = false;
+      state.error = null;
+      state.location = payload;
+    })
+    .addCase(userLocation.rejected, (state, {payload}) => {
+      state.loading = false;
+      state.error = payload;
+      state.location = null;
     })
   },
 });

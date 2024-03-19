@@ -21,13 +21,13 @@ import Loader from "../Helper/Loader";
 import { fetchPropertyDetails } from "../../Action/propertyAction";
 
 const PropertyDetails = () => {
-
-  const {property, loading } = useSelector((state) => state.properties);
   const dispatch = useDispatch();
   const { id } = useParams();
-  useEffect(() => {
+  const {property, loading } = useSelector((state) => state.properties);
+  useEffect(()=> {
       dispatch(fetchPropertyDetails(id));
-  }, [id, dispatch]);
+  },[dispatch, id])
+
   return (
     <>
       {loading ? (
@@ -56,7 +56,7 @@ const PropertyDetails = () => {
                       modules={[Autoplay, Pagination, Navigation]}
                       className="mySwiper"
                     >
-                      {property && property.avatar.map((data, index) => {
+                      {property && property.avatar && property.avatar.map((data, index) => {
 
                         return (
                           <>
@@ -77,12 +77,12 @@ const PropertyDetails = () => {
                 <div className="col-lg-4">
                   <div className="d-flex flex-column justify-content-between">
                     <img
-                      src={`http://localhost:5000/${property.avatar[0]}`}
+                      src={`http://localhost:5000/${property && property.avatar && property.avatar[0]}`}
                       alt=""
                       className="img-fluid mb-3  property_img"
                     />
                     <img
-                      src={`http://localhost:5000/${property.avatar[0]}`}
+                      src={`http://localhost:5000/${property && property.avatar && property.avatar[0]}`}
                       alt=""
                       className="img-fluid  property_img"
                     />
@@ -94,9 +94,9 @@ const PropertyDetails = () => {
                 </h2>
                 <div className="d-flex justify-content-between">
                   <p className="grey">
-                    <LocationOnIcon /> {property.address.street}{" "}
-                    {property.address.city} {property.address.state},{" "}
-                    {property.address.country}
+                    <LocationOnIcon /> { property && property.address && property.address.street}{" "}
+                    {property && property.address && property.address.city} {property && property.address && property.address.state},{" "}
+                    {property && property.address && property.address.country}
                   </p>
                   <Button variant="contained" className="fw-bold text-center fs-5 px-5 floating" >
                     <LocalPhoneIcon className="mx-2 " /> Schedule Meeting

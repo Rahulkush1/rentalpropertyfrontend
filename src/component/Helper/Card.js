@@ -10,11 +10,6 @@ import { Link } from "react-router-dom";
 import Formatprice from "./FormatPrice";
 
 export default function PropCard({ data }) {
-  // const navigate = useNavigate();
-  // const redirectUrl = () => {
-  //   navigate();
-  // };
-
   return (
     <Link to={`/properties/${data.attributes.id}`} className="text-decoration-none" >
     <Card sx={{ maxWidth: 345 }}>
