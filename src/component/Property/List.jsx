@@ -1,5 +1,6 @@
 import { Button } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const List = ({properties}) => {
   return (
@@ -10,6 +11,7 @@ const List = ({properties}) => {
                     <>
                         <div className="">
                             <div>
+                            <Link to={`/properties/${currentData.attributes.id}`} className="text-decoration-none" >
                                 <div className="card mb-3 m-auto" style={{"max-width": "80rem"}}>
                                     <div className="row g-4">
                                     
@@ -40,7 +42,7 @@ const List = ({properties}) => {
                                     
                                     </div>
                                 </div>
-
+                            </Link>
                             </div>
                         </div>
                     </>

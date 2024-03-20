@@ -13,6 +13,7 @@ import Breadcrumb from "../Helper/Breadcrumb";
 import Loader from "../Helper/Loader";
 import { fetchAllProperty } from "../../Action/propertyAction";
 import { useSearchParams } from "react-router-dom";
+import NoData from "../Images/noData.jpg";
 
 const Property = () => {
   const { properties, loading, view, totalpropertycount } = useSelector(
@@ -26,16 +27,20 @@ const Property = () => {
     sort_option: null,
     min_price: null,
     max_price: null,
-    prop_type:  null,
+    prop_type: searchParams.get("prop_type"),
     page: 1,
     keyword: searchParams.get("keyword"),
+    posted: null,
+    rating: null,
   });
+
   const priceHandler = (e, newPrice) => {
     setPrice(newPrice);
     setFilter({ ...filter, min_price: price[0], max_price: price[1] });
   };
-  const ratingHandler = (e, newRating) => {
-    setRatings(newRating);
+  const ratingHandler = (e) => {
+    setRatings(e.target.value);
+    setFilter({ ...filter, rating: e.target.value });
   };
   const HandleChange = (e, selected) => {
     if (selected != null) {
@@ -43,9 +48,14 @@ const Property = () => {
     }
   };
   const HandleType = (e) => {
-    setFilter({...filter, prop_type: e.target.innerText })
-  }
-  
+    setFilter({ ...filter, prop_type: e.target.innerText });
+  };
+
+  const HandlePosted = (e, selected) => {
+    if (selected != null) {
+      setFilter({ ...filter, posted: selected.name });
+    }
+  };
   const setPageNo = (e) => {
     setFilter({ ...filter, page: e.target.innerText });
   };
@@ -61,12 +71,17 @@ const Property = () => {
       min_price: null,
       max_price: null,
       prop_type: null,
+      posted: null,
+      rating: null,
+      keyword: null
     });
     setPrice([0, 5000]);
   };
   useEffect(() => {
     dispatch(fetchAllProperty(filter));
   }, [dispatch, filter]);
+
+  console.log(filter);
   return (
     <>
       <div className=" m-5 ">
@@ -86,29 +101,16 @@ const Property = () => {
                 ratingHandler={ratingHandler}
                 ratings={ratings}
                 clearFilter={clearFilter}
-                HandleType= {HandleType}
+                HandleType={HandleType}
+                HandlePosted={HandlePosted}
               />
             </div>
           </div>
+
           <div className="col-lg-10 properties scrollable">
             <div className=" ">
               <div className="sortDiv text-dark shadow-sm p-2 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
-                <div>
-                  {/* <Box
-                      component="form"
-                      sx={{
-                        "& > :not(style)": { m: 1, width: "30ch" },
-                      }}
-                      noValidate
-                      autoComplete="on"
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label="Search"
-                        variant="outlined"
-                      />
-                    </Box> */}
-                </div>
+                <div></div>
                 <h2 style={{ color: "var(--blue)" }}>
                   {" "}
                   Properties ({properties && properties.length})
@@ -136,7 +138,11 @@ const Property = () => {
                   </div>
                 </div>
               </div>
-              {loading ? (
+              {properties && properties.length == 0 ? (
+                <div className="d-flex justify-content-center align-itmes-center">
+                  <img src={NoData} className="img-fluid no-data-img" />
+                </div>
+              ) : loading ? (
                 <Loader />
               ) : (
                 <div className="main-property row gy-5">
