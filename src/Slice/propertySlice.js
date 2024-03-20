@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  CreatePropertyReview,
   fetchAllProperty,
   fetchPropertyDetails,
   fetchRecomendendProperty,
@@ -69,7 +70,20 @@ const propertySlice = createSlice({
       .addCase(fetchRecomendendProperty.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
-      });
+      })
+      .addCase(CreatePropertyReview.pending, (state)=>{
+        state.loading  = true;
+        state.error = null;
+      })
+      .addCase(CreatePropertyReview.fulfilled, (state,{payload}) => {
+        state.loading = false;
+        state.error  = null;
+        
+      })
+      .addCase(CreatePropertyReview.rejected, (state,{payload}) => {
+        state.loading = false;
+        state.error = payload
+      })
   },
 });
 

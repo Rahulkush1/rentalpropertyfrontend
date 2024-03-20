@@ -1,6 +1,12 @@
 .property_img{
     border-radius: 10px;
 }
+.posted{
+  text-transform: capitalize;
+}
+.pin_point{
+  color: var(--blue) !important;
+}
 
 .slider .swiper {
     width: 100%;

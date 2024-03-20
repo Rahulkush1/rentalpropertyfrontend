@@ -216,7 +216,7 @@ function Home() {
                     className="mySwiper5"
                   >
                     <SwiperSlide>
-                      <Link className="text-decoration-none">
+                      <Link className="text-decoration-none" to={'/properties?prop_type=1BHK'}>
                         <div
                           className="card border-0 shadow p-3 mb-5 bg-body-tertiary rounded"
                           style={{ width: "25rem" }}
@@ -235,7 +235,7 @@ function Home() {
                       </Link>
                     </SwiperSlide>
                     <SwiperSlide>
-                      <Link className="text-decoration-none">
+                      <Link className="text-decoration-none" to={'/properties?prop_type=2BHK'}>
                         <div
                           className="card border-0 shadow p-3 mb-5 bg-body-tertiary rounded"
                           style={{ width: "25rem" }}
@@ -254,7 +254,7 @@ function Home() {
                       </Link>
                     </SwiperSlide>
                     <SwiperSlide>
-                      <Link className="text-decoration-none">
+                      <Link className="text-decoration-none" to={'/properties?prop_type=3BHK'}>
                         <div
                           className="card border-0 shadow p-3 mb-5 bg-body-tertiary rounded"
                           style={{ width: "25rem" }}
