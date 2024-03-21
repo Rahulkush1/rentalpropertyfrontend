@@ -35,7 +35,9 @@
 .category-link:hover {
 	color: rgba(1, 0, 0, 0.31);
 }
-
+.rating_star{
+	font-size: 2rem !important;
+}
 @media screen and (max-width: 993px) {
 	.MobileFilters {
 		display: contents;

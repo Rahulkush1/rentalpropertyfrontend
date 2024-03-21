@@ -7,6 +7,9 @@
 .pin_point{
   color: var(--blue) !important;
 }
+.booking-box{
+  transition: 1s ease-in-out !important ;
+}
 
 .slider .swiper {
     width: 100%;

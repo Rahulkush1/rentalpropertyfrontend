@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import "./filterSection.css";
+
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import "./filterSection.css";
 function valuetext(value) {
   return `${value}°C`;
 }
@@ -36,7 +37,6 @@ const FilterSection = (props) => {
     HandleType,
     HandlePosted
   } = props;
-  
   return (
     <>
       <div className="filterBox p-4">
@@ -82,22 +82,6 @@ const FilterSection = (props) => {
             ))}
         </ul>
 
-        {/* <fieldset>
-          <legend>
-            <p className="text-dark fs-5">Rating</p>
-          </legend>
-          <Slider
-            aria-label="Small steps"
-            getAriaValueText={valuetext}
-            step={1}
-            marks
-            min={0}
-            max={5}
-            valueLabelDisplay="auto"
-            value={ratings}
-            // onChange={ratingHandler}
-          />
-        </fieldset> */}
         <hr style={{ color: "black" }} />
         <p className="text-dark fs-5">Posted By</p>
         <Box>
@@ -112,8 +96,11 @@ const FilterSection = (props) => {
             )}
           />
         </Box>
+        <hr style={{ color: "black" }} />
+        <p className="text-dark fs-5">Rating</p>
+              
         <Stack spacing={1}>
-          <Rating name="half-rating" defaultValue={3} precision={0.5} onChange={ratingHandler} />
+          <Rating name="half-rating" className="rating_star" defaultValue={ratings} precision={0.5} onChange={ratingHandler} />
         </Stack>
         <div className="clear-filter text-center mt-4">
           <Button variant="outlined" onClick={clearFilter}>

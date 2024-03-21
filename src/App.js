@@ -20,20 +20,11 @@ import "react-toastify/dist/ReactToastify.css";
 import UserDial from "./component/Helper/UserDial";
 import { setProperty } from "./Slice/propertySlice";
 import { useGetPropertiesQuery } from "./services/auth/propertyService";
+import Appointment from "./component/Appointment/Appointment";
 
 export default function App() {
   const dispatch = useDispatch()
-  // const {userInfo} = useSelector(state => state.user)
-
-  // const {data, isFetching} = useGetUserDetailsQuery('userDetails',{
-  //   pollingInterval: 800000,
-  // })
-  // useEffect(()=>{
-  //   if(data){
-  //     dispatch(setCredentials(data))
-  //     }
-  // },[dispatch,data])
-  const { userInfo, error: userError,  isAuthenticated, loading } = useSelector(
+  const { userInfo, error,  isAuthenticated, loading } = useSelector(
     (state) => state.user
   );
   const { data,  isFetching } = useGetUserDetailsQuery("userDetails", {
@@ -42,8 +33,6 @@ export default function App() {
   const { data1, isloading } = useGetPropertiesQuery("properties", {
     pollingInterval: 9000000,
   });
-
-  // dispatch(clearErrors());
  
   useEffect(() => {
     if (data) {
@@ -59,14 +48,17 @@ export default function App() {
     <>
       <BrowserRouter>
         <Navbar />
-
-        {/* <UserDial  /> */}
+        {
+          isAuthenticated && <UserDial user={userInfo}  />
+        }
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<Property />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/properties/:id" element={<PropertyDetails />} />
+          <Route path="/users/appointments" element={<Appointment />} />
         </Routes>
         <Footer />
         <ToastContainer

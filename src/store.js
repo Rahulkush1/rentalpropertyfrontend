@@ -5,12 +5,14 @@ import { authApi } from "./services/auth/authService";
 
 import { propertyApi } from "./services/auth/propertyService";
 import citySlice from "./Slice/citySlice";
+import appointmentSlice from "./Slice/appointmentSlice";
 
 const store = configureStore({
   reducer: {
     user: userSlice,
     properties: propertySlice,
     cities: citySlice,
+    appointment: appointmentSlice,
     [authApi.reducerPath]: authApi.reducer,
     [propertyApi.reducerPath]: propertyApi.reducer,
   },
