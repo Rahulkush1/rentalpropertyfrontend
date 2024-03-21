@@ -17,7 +17,7 @@ function Navbar() {
       : {
           position: "sticky",
           top: "0",
-          zIndex: "1020",
+          zIndex: "3",
         };
   const {  isAuthenticated } = useSelector(
     (state) => state.user

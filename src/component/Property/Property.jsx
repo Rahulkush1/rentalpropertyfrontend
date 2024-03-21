@@ -39,7 +39,7 @@ const Property = () => {
     setFilter({ ...filter, min_price: price[0], max_price: price[1] });
   };
   const ratingHandler = (e) => {
-    setRatings(e.target.value);
+    // setRatings(e.target.value);
     setFilter({ ...filter, rating: e.target.value });
   };
   const HandleChange = (e, selected) => {
@@ -75,6 +75,7 @@ const Property = () => {
       rating: null,
       keyword: null
     });
+    setRatings(0);
     setPrice([0, 5000]);
   };
   useEffect(() => {

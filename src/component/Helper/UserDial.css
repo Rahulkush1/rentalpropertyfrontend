@@ -1,0 +1,24 @@
+.userDial{
+    position: fixed !important;
+    z-index: 100000 !important;
+    right: 6%;
+	top: 10%;
+
+}
+.speedDialIcon {
+	width: 3vmax;
+	height: 3vmax;
+	border-radius: 50%;
+}
+.backdrop {
+	z-index: 12;
+}
+.speedDialbox {
+	position: fixed ;
+	z-index: 1;
+}
+.css-7dv1rb-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab {
+	background-color: transparent !important;
+	width: 3vmax !important;
+	height: 3vmax !important;
+}

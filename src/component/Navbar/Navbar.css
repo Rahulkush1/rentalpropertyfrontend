@@ -1,5 +1,6 @@
 .navbar{
 	background-color: #362FD9 !important;
+	z-index: -1;
 }
 .nav-link-ltr:after {
 	display:block;

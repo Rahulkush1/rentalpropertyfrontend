@@ -30,6 +30,9 @@ const propertySlice = createSlice({
       state.loading = false;
       state.properties = payload;
     },
+    clearErrors: (state, {payload}) => {
+      state.error = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -99,6 +102,6 @@ const propertySlice = createSlice({
 //     return resp.data
 // })
 
-export const { gridView, listView, setProperty } = propertySlice.actions;
+export const { gridView, listView, setProperty,clearErrors } = propertySlice.actions;
 
 export default propertySlice.reducer;
