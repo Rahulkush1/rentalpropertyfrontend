@@ -4,10 +4,11 @@ import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Slice/userSlice";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   const dispatch = useDispatch();
+  const location = useLocation()
   const navVisibility =
     window.location.pathname === "/login" ||
     window.location.pathname === "/signup"
@@ -41,6 +42,7 @@ function Navbar() {
   //   }
   // }, [dispatch, data, data1]);
   const userlogout = () => {
+    
     dispatch(logout());
   }
   return (
@@ -66,21 +68,31 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
-              <li className="nav-item">
+              <li className='nav-item'>
                 <Link
-                  className="nav-link active nav-link-ltr"
+                  className={`nav-link  nav-link-ltr ${location.pathname === "/" ? "active" : ""}`}
                   aria-current="page"
                   to="/"
                 >
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to={"/properties"} className="nav-link nav-link-ltr">
+              <li className='nav-item'>
+                <Link to={"/properties"} className={`nav-link  nav-link-ltr ${location.pathname === "/properties" ? "active" : ""}`}>
                   Property
                 </Link>
               </li>
-              <li className="nav-item dropdown">
+              <li className='nav-item'>
+                <Link to={"/about"} className={`nav-link  nav-link-ltr ${location.pathname === "/about" ? "active" : ""}`}>
+                  About
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link to={"/contact"} className={`nav-link  nav-link-ltr ${location.pathname === "/contact" ? "active" : ""}`}>
+                  Contact
+                </Link>
+              </li>
+              {/* <li className="nav-item dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
                   to="/"
@@ -111,7 +123,7 @@ function Navbar() {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
             </ul>
             <ul className="navbar-nav  ms-auto mb-2 mb-lg-0">
               {isAuthenticated ? (

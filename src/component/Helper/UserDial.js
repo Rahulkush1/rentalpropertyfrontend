@@ -28,14 +28,22 @@ const UserDial = ({user}) => {
   const navigate = useNavigate()
 
   const actions = [
-    { icon: <AccountBoxIcon />, name: "Profile" },
+    { icon: <AccountBoxIcon />, name: "Profile", func: account },
     { icon: <BookOnlineIcon />, name: "Appointments", func: appointment },
-    { icon: <CheckIcon   />, name: "Booked Property" },
+    { icon: <CheckIcon   />, name: "Booked Property", func: booking },
     { icon: <ShareIcon />, name: "Share" },
   ];
   
   function appointment() {
     navigate('/users/appointments');
+  }
+
+  function booking() {
+    navigate('/users/bookings')
+  }
+
+  function account(){
+    navigate('/user/profile')
   }
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);

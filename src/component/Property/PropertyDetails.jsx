@@ -31,6 +31,7 @@ import { clearErrors } from "../../Slice/appointmentSlice";
 import { getAppointment } from "../../Action/appointmentAction";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 
+
 const PropertyDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -38,7 +39,7 @@ const PropertyDetails = () => {
     (state) => state.appointment
   );
   const { property, loading } = useSelector((state) => state.properties);
-  const { userInfo } = useSelector((state) => state.user);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
 
   const [reviews, setReviews] = useState({
     id: id,
@@ -49,7 +50,20 @@ const PropertyDetails = () => {
 
   const SubmitReview = async (e) => {
     e.preventDefault();
-    dispatch(CreatePropertyReview(reviews));
+    if (userInfo && isAuthenticated) {
+      dispatch(CreatePropertyReview(reviews));
+    } else {
+      toast.error("Please Login to review property", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
     dispatch(fetchPropertyDetails(id));
     setReviews({ ...reviews, rating: 0, review: "" });
   };
@@ -68,7 +82,7 @@ const PropertyDetails = () => {
         theme: "colored",
       });
     }
-    if (error && error != "Not Found") {
+    if (isAuthenticated && error && error != "Not Found" ) {
       toast.error(error, {
         position: "top-center",
         autoClose: 5000,
@@ -81,7 +95,7 @@ const PropertyDetails = () => {
       });
     }
     dispatch(clearErrors());
-  }, [dispatch, id, toast, success, error]);
+  }, [dispatch, id, toast, success, error, isAuthenticated]);
 
   useEffect(() => {
     dispatch(getAppointment(id));

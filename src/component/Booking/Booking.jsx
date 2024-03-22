@@ -7,9 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAppointmentloggedUser } from "../../Action/appointmentAction";
 import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
-import Breadcrumb from "../Helper/Breadcrumb";
 
-function Appointment() {
+function Booking() {
   const dispatch = useDispatch();
 
   const [searchText, setSearchText] = useState("");
@@ -215,14 +214,11 @@ function Appointment() {
   ];
   return (
     <div>
-      <div className="grey mt-4 mx-5">
-        <Breadcrumb />
-      </div>
-      {/* <h3 className="grey mt-5 mx-5">
+      <h3 className="grey mt-5 mx-5">
         {" "}
         {userInfo && userInfo.data && userInfo.data.attributes.full_name}'s
-        Appointments
-      </h3> */}
+        Bookings
+      </h3>
       <Table
         columns={columns}
         dataSource={data}
@@ -247,4 +243,4 @@ function Appointment() {
   );
 }
 
-export default Appointment;
+export default Booking;
