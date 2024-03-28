@@ -16,13 +16,25 @@ const AppointmentForm = ({data, id}) => {
     const HadnleAppointment = (e) => {
         setAppointment({...appointment, [e.target.name] : e.target.value})
     }
-    const date = new Date()
+    const mindate = () => { 
+      let d = new Date();
+      let day = d.getDate()
+      let month = d.getMonth() + 1
+      return `${d.getFullYear()}-${month < 10 ? ("0" + month ) : month}-${day < 10 ? "0" + day : day}`;
+     }
+     const maxdate = () => { 
+      let d = new Date();
+      let day = d.getDate()
+      let month = d.getMonth() + 1 + 1
+      return `${d.getFullYear()}-${month < 10 ? ("0" + month ) : month}-${day < 10 ? "0" + day : day}`;
+     }
 
     const SubmitAppointment = (e) => {
         e.preventDefault();
         dispatch(createAppointment(appointment));
 
     }
+    
 
   return (
     <div>
@@ -70,7 +82,7 @@ const AppointmentForm = ({data, id}) => {
                   <label for="recipient-name" class="col-form-label grey">
                     Date
                   </label>
-                  <input type="date" class="form-control" min={date.toLocaleDateString} name="date" value={appointment.date}  onChange={HadnleAppointment} />
+                  <input type="date" class="form-control" min={mindate()} max={maxdate()} name="date" value={appointment.date}  onChange={HadnleAppointment} />
                 </div>
                 <div class="mb-3">
                   <label for="message-text" class="col-form-label grey">

@@ -17,6 +17,10 @@ const initialState = {
   ? localStorage.getItem("userToken")
   : null;
 
+  initialState.isAuthenticated = localStorage.getItem("isAuthenticated")
+  ? localStorage.getItem("isAuthenticated")
+  : false;
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -25,11 +29,11 @@ const userSlice = createSlice({
       state.userInfo = {};
       localStorage.removeItem('userToken');
       state.userToken = null;
+      localStorage.removeItem('isAuthenticated');
       state.isAuthenticated = false;
     },
     setCredentials: (state, { payload }) => {
       state.userInfo = payload;
-      state.isAuthenticated = true;
       state.error = null;
     },
     clearErrors: (state, {payload}) => {
@@ -46,14 +50,12 @@ const userSlice = createSlice({
         state.loading = false;
         state.userInfo = payload;
         state.userToken = payload.auth_token;
-        state.isAuthenticated = true
+        state.isAuthenticated = true;
         state.error= null;
     })
     .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
-        state.isAuthenticated = false;
-
     })
     .addCase(registerUser.pending, (state) => {
       state.loading = true;
