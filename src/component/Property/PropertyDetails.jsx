@@ -3,7 +3,7 @@ import Formatprice from "../Helper/FormatPrice";
 import { useDispatch, useSelector } from "react-redux";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Button } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./PropertyDetails.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -30,7 +30,9 @@ import { toast } from "react-toastify";
 import { clearErrors } from "../../Slice/appointmentSlice";
 import { getAppointment } from "../../Action/appointmentAction";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
-
+import { Elements, ElementsConsumer } from "@stripe/react-stripe-js";
+import CheckoutForm from "../Payment/CheckoutForm";
+import { loadStripe } from "@stripe/stripe-js";
 
 const PropertyDetails = () => {
   const dispatch = useDispatch();
@@ -82,7 +84,7 @@ const PropertyDetails = () => {
         theme: "colored",
       });
     }
-    if (isAuthenticated && error && error != "Not Found" ) {
+    if (isAuthenticated && error && error != "Not Found") {
       toast.error(error, {
         position: "top-center",
         autoClose: 5000,
@@ -96,6 +98,8 @@ const PropertyDetails = () => {
     }
     dispatch(clearErrors());
   }, [dispatch, id, toast, success, error, isAuthenticated]);
+
+
 
   useEffect(() => {
     dispatch(getAppointment(id));
@@ -166,11 +170,14 @@ const PropertyDetails = () => {
                     />
                   </div>
                 </div>
-                <h2 className="price text-dark my-2">
+                <h2 className="price text-dark my-2" data-aos="fade-right">
                   {" "}
                   <Formatprice price={property.price} />{" "}
                 </h2>
-                <div className="d-flex justify-content-between">
+                <div
+                  className="d-flex justify-content-between"
+                 
+                >
                   <p className="grey">
                     <LocationOnIcon className="pin_point" />{" "}
                     {property && property.address && property.address.street}{" "}
@@ -178,16 +185,16 @@ const PropertyDetails = () => {
                     {property && property.address && property.address.state},{" "}
                     {property && property.address && property.address.country}
                   </p>
-                  {appointment ? (
+                  {appointment && ( appointment.attributes && appointment.attributes.status === 'Pending') ? (
                     <Button
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                       data-bs-whatever="@getbootstrap"
                       variant="contained"
-                      disabled="true"
+                   
                       className="fw-bold text-center fs-5 px-5 floating"
                     >
-                      <LocalPhoneIcon className="mx-2 " /> Meeting Scheduled
+                      <LocalPhoneIcon className="mx-2 " /> Reserve Your Space Now
                     </Button>
                   ) : (
                     <Button
@@ -204,6 +211,7 @@ const PropertyDetails = () => {
                 <div
                   className="amenities  d-flex justify-content-around w-50 "
                   style={{ color: "var(--grey)" }}
+                  data-aos="fade-right"
                 >
                   {property &&
                     property.amenities &&
@@ -284,7 +292,10 @@ const PropertyDetails = () => {
                       );
                     })}
                 </div>
-                <div className="discription text-dark text-break my-4">
+                <div
+                  className="discription text-dark text-break my-4"
+                  data-aos="fade-right"
+                >
                   <h4 className="grey">Property Description</h4>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -307,12 +318,37 @@ const PropertyDetails = () => {
               </div>
             </div>
             <div className="col-lg-3">
-              {appointment ? (
-                ""
+              {appointment && ( appointment.attributes && appointment.attributes.status === 'Pending') ? (
+                <div
+                  className="card border-primary mb-3 booking-box"
+                  style={{ maxWidth: "28rem" }}
+                  data-aos="fade-left"
+                >
+                  <div className="card-header">Book </div>
+                  <div className="card-body text-primary">
+                    <h5 className="card-title">Reserve Your Space </h5>
+                    <p className="card-text grey">
+                      Are you ready to find your ideal space? Our range of PGs,
+                      rooms, and flats await, offering comfort and convenience
+                      tailored to your needs.
+                      <br />
+                      <br />
+                      Why wait to secure your spot when you can do it now?. Book
+                      now and unlock the perfect living arrangement for you.
+                    </p>
+                    <Link to={`/payment/process/${property.price}`} className="text-decoration-none">
+                    <Button variant="outlined" className="">
+                      {" "}
+                      <BookOnlineIcon className="mx-2" /> Book Now
+                    </Button>
+                    </Link>
+                  </div>
+                </div>
               ) : (
                 <div
                   className="card border-primary mb-3"
                   style={{ maxWidth: "28rem" }}
+                  data-aos="fade-left"
                 >
                   <div className="card-header">Note</div>
                   <div className="card-body text-primary">
@@ -342,38 +378,10 @@ const PropertyDetails = () => {
                       data-bs-whatever="@getbootstrap"
                       className="fw-bold text-center  "
                     >
-                      {" "}
                       <LocalPhoneIcon className="mx-2" /> Schedule Now !
                     </Button>
                   </div>
                 </div>
-              )}
-
-              {appointment ? (
-                <div
-                  className="card border-primary mb-3 booking-box"
-                  style={{ maxWidth: "28rem" }}
-                >
-                  <div className="card-header">Book </div>
-                  <div className="card-body text-primary">
-                    <h5 className="card-title">Reserve Your Space </h5>
-                    <p className="card-text grey">
-                      Are you ready to find your ideal space? Our range of PGs,
-                      rooms, and flats await, offering comfort and convenience
-                      tailored to your needs.
-                      <br />
-                      <br />
-                      Why wait to secure your spot when you can do it now?. Book
-                      now and unlock the perfect living arrangement for you.
-                    </p>
-                    <Button variant="outlined" className="">
-                      {" "}
-                      <BookOnlineIcon className="mx-2" /> Book Now
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                ""
               )}
               <div>
                 <h3 className="my-4" style={{ color: "var(--grey)" }}>
@@ -397,6 +405,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               ) : data.title.toLowerCase() ===
                                 `gym facility` ? (
@@ -406,6 +415,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               ) : data.title.toLowerCase() === `garden area` ? (
                                 <img
@@ -414,6 +424,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               ) : data.title.toLowerCase() ===
                                 `food facility` ? (
@@ -423,6 +434,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               ) : data.title.toLowerCase() ===
                                 `parking area` ? (
@@ -432,6 +444,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               ) : data.title.toLowerCase() === `ro water` ? (
                                 <img
@@ -440,6 +453,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               ) : (
                                 <img
@@ -448,6 +462,7 @@ const PropertyDetails = () => {
                                   alt=""
                                   width={40}
                                   height={10}
+                                  data-aos="flip-up"
                                 />
                               )}
                               <span className="mx-2">{data.title}</span>
@@ -511,9 +526,10 @@ const PropertyDetails = () => {
                 );
               })}
           </div>
-          {userInfo && userInfo.data && (
-            <AppointmentForm data={userInfo && userInfo.data} id={id} />
+          {userInfo && userInfo && (
+            <AppointmentForm data={userInfo && userInfo} id={id} />
           )}
+
         </div>
       )}
     </>

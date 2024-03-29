@@ -7,9 +7,9 @@ import { createAppointment } from "../../Action/appointmentAction";
 const AppointmentForm = ({data, id}) => {
     const dispatch = useDispatch()
     const [appointment, setAppointment] = useState({
-        name: data.attributes.full_name,
-        email:  data.attributes.email,
-        phone:  data.attributes.phone,
+        name: data.full_name,
+        email:  data.email,
+        phone:  data.phone,
         property_id: id
         
     });
