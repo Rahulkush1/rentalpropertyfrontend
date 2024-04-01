@@ -163,7 +163,7 @@ function Home() {
               <h3 className="main-heading my-3">
                 Recommended By <span className=" title-heading"> Cities</span>{" "}
               </h3>
-              <div className="row">
+              <div className="row" data-aos="fade-down">
                 {recomdend &&
                   recomdend.map((current) => {
                     return (
@@ -177,7 +177,7 @@ function Home() {
                   })}
               </div>
             </div>
-            <div className="bhk">
+            <div className="bhk" data-aos="fade-down">
               <div className="row m-auto ">
                 <div className="col-lg-8 d-flex flex-column justify-content-center">
                   <h1 className="main-heading my-3 ">

@@ -69,7 +69,7 @@ export const getAppointment = createAsyncThunk(
         };
   
         const {data} = await axios.get(
-          `${BASE_URL}/users/appointments`,
+          `${BASE_URL}/users/appointments?self_appointment=true`,
           config
         );
 

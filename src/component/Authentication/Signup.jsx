@@ -89,10 +89,17 @@ function Signup() {
             <form onSubmit={Register}>
               <input
                 type="text"
-                name="username"
-                placeholder="Username"
+                name="first_name"
+                placeholder="First Name"
                 onChange={handleInput}
-                value={userData.username}
+                value={userData.first_name}
+              />
+                            <input
+                type="text"
+                name="last_name"
+                placeholder="Last Name"
+                onChange={handleInput}
+                value={userData.last_name}
               />
               <input
                 type="text"
