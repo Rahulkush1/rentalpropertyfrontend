@@ -218,11 +218,11 @@ function Appointment() {
       <div className="grey mt-4 mx-5">
         <Breadcrumb />
       </div>
-      {/* <h3 className="grey mt-5 mx-5">
-        {" "}
-        {userInfo && userInfo.data && userInfo.data.attributes.full_name}'s
-        Appointments
-      </h3> */}
+        <h3 className="grey mt-5 mx-5">
+          {" "}
+          {userInfo &&  userInfo.full_name}'s
+          Appointments
+        </h3>
       <Table
         columns={columns}
         dataSource={data}

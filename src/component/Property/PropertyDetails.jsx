@@ -33,6 +33,7 @@ import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Payment/CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import { getBooking } from "../../Action/bookingAction";
 
 const PropertyDetails = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const PropertyDetails = () => {
   );
   const { property, loading } = useSelector((state) => state.properties);
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
+  const { booking } = useSelector((state) => state.booking);
 
   const [reviews, setReviews] = useState({
     id: id,
@@ -99,10 +101,9 @@ const PropertyDetails = () => {
     dispatch(clearErrors());
   }, [dispatch, id, toast, success, error, isAuthenticated]);
 
-
-
   useEffect(() => {
     dispatch(getAppointment(id));
+    dispatch(getBooking(id));
   }, [dispatch, id]);
 
   return (
@@ -174,10 +175,7 @@ const PropertyDetails = () => {
                   {" "}
                   <Formatprice price={property.price} />{" "}
                 </h2>
-                <div
-                  className="d-flex justify-content-between"
-                 
-                >
+                <div className="d-flex justify-content-between">
                   <p className="grey">
                     <LocationOnIcon className="pin_point" />{" "}
                     {property && property.address && property.address.street}{" "}
@@ -185,17 +183,44 @@ const PropertyDetails = () => {
                     {property && property.address && property.address.state},{" "}
                     {property && property.address && property.address.country}
                   </p>
-                  {appointment && ( appointment.attributes && appointment.attributes.status === 'Pending') ? (
+                  {property && property.status === "sold" ? (
                     <Button
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                       data-bs-whatever="@getbootstrap"
                       variant="contained"
-                   
                       className="fw-bold text-center fs-5 px-5 floating"
+                      disabled={true}
                     >
-                      <LocalPhoneIcon className="mx-2 " /> Reserve Your Space Now
+                      <LocalPhoneIcon className="mx-2 " /> Sold
                     </Button>
+                  ) : appointment &&
+                    appointment.attributes &&
+                    appointment.attributes.status !== "Rejected" ? (
+                    appointment.attributes &&
+                    appointment.attributes.status === "Pending" ? (
+                      <Button
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@getbootstrap"
+                        variant="contained"
+                        className="fw-bold text-center fs-5 px-5 floating"
+                        disabled={true}
+                      >
+                        <LocalPhoneIcon className="mx-2 " /> Meeting Scheduled
+                      </Button>
+                    ) : (
+                      <Button
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@getbootstrap"
+                        variant="contained"
+                        className="fw-bold text-center fs-5 px-5 floating"
+                      >
+                        <LocalPhoneIcon className="mx-2 " /> Reserve Your Space
+                        Now
+                      </Button>
+                    )
                   ) : (
                     <Button
                       data-bs-toggle="modal"
@@ -318,7 +343,7 @@ const PropertyDetails = () => {
               </div>
             </div>
             <div className="col-lg-3">
-              {appointment && ( appointment.attributes && appointment.attributes.status === 'Pending') ? (
+              {property && property.status === "sold" ? (
                 <div
                   className="card border-primary mb-3 booking-box"
                   style={{ maxWidth: "28rem" }}
@@ -336,14 +361,88 @@ const PropertyDetails = () => {
                       Why wait to secure your spot when you can do it now?. Book
                       now and unlock the perfect living arrangement for you.
                     </p>
-                    <Link to={`/payment/process/${property.price}`} className="text-decoration-none">
-                    <Button variant="outlined" className="">
-                      {" "}
-                      <BookOnlineIcon className="mx-2" /> Book Now
-                    </Button>
-                    </Link>
+  
+                      <Button variant="outlined" className="" disabled={true}> 
+                        {" "}
+                        <BookOnlineIcon className="mx-2" /> Sold
+                      </Button>
+              
                   </div>
                 </div>
+              ) : appointment &&
+                appointment.attributes &&
+                appointment.attributes.status !== "Rejected" ? (
+                appointment.attributes &&
+                appointment.attributes.status === "Pending" ? (
+                  <div
+                    className="card border-primary mb-3"
+                    style={{ maxWidth: "28rem" }}
+                    data-aos="fade-left"
+                  >
+                    <div className="card-header">Note</div>
+                    <div className="card-body text-primary">
+                      <h5 className="card-title">Schedule Visit Appointment</h5>
+                      <p className="card-text grey ">
+                        Are you eager to explore our range of properties, from
+                        cozy rooms to spacious PGs?
+                        <br />
+                        To ensure that your visit is seamless and personalized,
+                        we highly recommend scheduling an appointment in
+                        advance. By doing so, you'll receive dedicated
+                        assistance from our team, allowing us to tailor your
+                        viewing experience to your specific requirements.
+                        <br />
+                        Simply fill out the form below with your preferred date
+                        and time, and our team will reach out to confirm your
+                        appointment.
+                        <br />
+                        Don't miss out on the opportunity to find your ideal
+                        property. Schedule your appointment today and let us
+                        help you discover your perfect home!
+                      </p>
+                      <Button
+                        variant="outlined"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@getbootstrap"
+                        className="fw-bold text-center  "
+                        disabled={true}
+                      >
+                        <LocalPhoneIcon className="mx-2" /> Scheduled
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="card border-primary mb-3 booking-box"
+                    style={{ maxWidth: "28rem" }}
+                    data-aos="fade-left"
+                  >
+                    <div className="card-header">Book </div>
+                    <div className="card-body text-primary">
+                      <h5 className="card-title">Reserve Your Space </h5>
+                      <p className="card-text grey">
+                        Are you ready to find your ideal space? Our range of
+                        PGs, rooms, and flats await, offering comfort and
+                        convenience tailored to your needs.
+                        <br />
+                        <br />
+                        Why wait to secure your spot when you can do it now?.
+                        Book now and unlock the perfect living arrangement for
+                        you.
+                      </p>
+                      <Link
+                        to={`confirm/booking/${property.price}`}
+                        className="text-decoration-none"
+                      >
+                        <Button variant="outlined" className="">
+                          {" "}
+                          <BookOnlineIcon className="mx-2" /> Book Now
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )
               ) : (
                 <div
                   className="card border-primary mb-3"
@@ -383,6 +482,7 @@ const PropertyDetails = () => {
                   </div>
                 </div>
               )}
+
               <div>
                 <h3 className="my-4" style={{ color: "var(--grey)" }}>
                   Amenities
@@ -526,10 +626,9 @@ const PropertyDetails = () => {
                 );
               })}
           </div>
-          {userInfo && userInfo && (
-            <AppointmentForm data={userInfo && userInfo} id={id} />
+          {userInfo  && (
+            <AppointmentForm data={userInfo} id={id} />
           )}
-
         </div>
       )}
     </>

@@ -33,8 +33,15 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
     },
     setCredentials: (state, { payload }) => {
-      state.userInfo = payload;
+      state.userInfo = payload.data.attributes;
       state.error = null;
+    },
+    removeCredentials: (state, {payload}) => {
+      state.userInfo = null;
+      state.error = payload
+      state.isAuthenticated = false;
+      localStorage.removeItem('isAuthenticated');
+
     },
     clearErrors: (state, {payload}) => {
       state.error = null;
@@ -56,6 +63,7 @@ const userSlice = createSlice({
     .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
+        state.isAuthenticated = false;
     })
     .addCase(registerUser.pending, (state) => {
       state.loading = true;
@@ -88,5 +96,5 @@ const userSlice = createSlice({
   },
 });
 
-export const {logout, setCredentials,clearErrors} = userSlice.actions;
+export const {logout, setCredentials, removeCredentials ,clearErrors} = userSlice.actions;
 export default userSlice.reducer;

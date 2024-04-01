@@ -11,6 +11,7 @@ import store from "./store";
 import {
   clearErrors,
   loadUser,
+  removeCredentials,
   setCredentials,
   setUserError,
 } from "./Slice/userSlice";
@@ -38,6 +39,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./component/Payment/CheckoutForm";
 import Payment from "./component/Payment/Payment";
+import PaymentSuccess from "./component/Payment/PaymentSuccess";
+import ConfirmBooking from "./component/Payment/ConfirmBooking";
 
 export default function App() {
   AOS.init({
@@ -47,11 +50,11 @@ export default function App() {
     easing: "ease-in-out",
   });
   const dispatch = useDispatch();
-  const { userInfo, error, isAuthenticated, loading } = useSelector(
+  const { userInfo, isAuthenticated, loading } = useSelector(
     (state) => state.user
   );
-  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
-    pollingInterval: 10000,
+  const { data, error, isFetching } = useGetUserDetailsQuery("userDetails", {
+    pollingInterval: 9000000,
   });
   const { data1, isloading } = useGetPropertiesQuery("properties", {
     pollingInterval: 9000000,
@@ -64,7 +67,10 @@ export default function App() {
     if (data1) {
       dispatch(setProperty(data1));
     }
-  }, [dispatch, data, data1]);
+    if (error) {
+      dispatch(removeCredentials(error));
+    }
+  }, [dispatch, data, data1, error]);
 
   const stripePromise = loadStripe(
     "pk_test_51O2t3FSH6OcOxuhnnJDGpo3CDg2zuqJm5RC21EdPFwcy2ZJdlSfANKaCCSYJYZ4hSRMr6HnWU3H7iLznjHiIaAQS00JxvDUZvk"
@@ -115,10 +121,27 @@ export default function App() {
               }
             />
             <Route
-              path="/payment/process/:amount"
+              path="properties/:id/confirm/booking/:amount"
+              element={
+                <ProtectedRoute>
+                  <ConfirmBooking />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="properties/:id/payment/process/"
               element={
                 <ProtectedRoute>
                   <Payment />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/success"
+              element={
+                <ProtectedRoute>
+                  <PaymentSuccess />
                 </ProtectedRoute>
               }
             />

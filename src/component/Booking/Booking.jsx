@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAppointmentloggedUser } from "../../Action/appointmentAction";
 import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
+import { getAllBookings } from "../../Action/bookingAction";
+import Formatprice from "../Helper/FormatPrice";
 
 function Booking() {
   const dispatch = useDispatch();
@@ -14,28 +16,27 @@ function Booking() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
-  const { appointments, loading } = useSelector((state) => state.appointment);
+  const { bookings, loading } = useSelector((state) => state.booking);
   const { userInfo } = useSelector((state) => state.user);
-
+  console.log(bookings)
   let count = 0;
   const data =
-    appointments &&
-    appointments.map(
-      (appointment) => (
+  bookings &&
+  bookings.map(
+      (booking) => (
         (count += 1),
         {
           id: count,
-          name: appointment.attributes && appointment.attributes.name,
-          date: appointment.attributes && appointment.attributes.date,
-          status: appointment.attributes && appointment.attributes.status,
-          property: appointment.attributes && appointment.attributes.property,
+          price: booking.attributes && booking.attributes.payment.data.attributes.total_price,
+          status: booking.attributes && booking.attributes.payment.data.attributes.payment_status,
+          property: booking.attributes && booking.attributes.property,
+          paidAt: booking.attributes && booking.attributes.payment.data.attributes.created_at
         }
       )
     );
 
-  console.log(data);
   useEffect(() => {
-    dispatch(getAllAppointmentloggedUser());
+    dispatch(getAllBookings());
   }, [dispatch]);
 
   console.log(data);
@@ -160,25 +161,25 @@ function Booking() {
       sorter: (a, b) => a.id - b.id,
       sortDirections: ["descend", "ascend"],
     },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      width: "20%",
-      ...getColumnSearchProps("name"),
-      sorter: (a, b) => a.name - b.name,
-      sortDirections: ["descend", "ascend"],
-    },
+    // {
+    //   title: "Name",
+    //   dataIndex: "name",
+    //   key: "name",
+    //   width: "20%",
+    //   ...getColumnSearchProps("name"),
+    //   sorter: (a, b) => a.name - b.name,
+    //   sortDirections: ["descend", "ascend"],
+    // },
 
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-      with: "20%",
-      ...getColumnSearchProps("date"),
-      sorter: (a, b) => a.date - b.date,
-      sortDirections: ["descend", "ascend"],
-    },
+    // {
+    //   title: "Date",
+    //   dataIndex: "date",
+    //   key: "date",
+    //   with: "20%",
+    //   ...getColumnSearchProps("date"),
+    //   sorter: (a, b) => a.date - b.date,
+    //   sortDirections: ["descend", "ascend"],
+    // },
     {
       title: "Property",
       dataIndex: "property",
@@ -192,31 +193,52 @@ function Booking() {
       ),
     },
     {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      with: "20%",
+      ...getColumnSearchProps("price"),
+      sorter: (a, b) => a.payment.total_price - b.payment.total_price,
+      sortDirections: ["descend", "ascend"],
+
+      render: (price) => (
+        <Formatprice price={price}
+        />
+      ),
+
+
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",
       with: "20%",
       ...getColumnSearchProps("status"),
-      sorter: (a, b) => a.property - b.property,
-      sortDirections: ["descend", "ascend"],
       render: (status) => (
         <Chip
           label={status}
           color={
-            (status === "Approved" && "success") ||
-            (status === "Rejected" && "error") ||
-            (status === "Pending" && "warning")
+            (status === "succeeded" && "success") ||
+            (status === "payment_failed" && "error") ||
+            (status === "processing" && "warning")
           }
           variant="outlined"
         />
       ),
+    },
+    {
+      title: "Paid At",
+      dataIndex: "paidAt",
+      key: "paidAt",
+      with: "20%",
+      ...getColumnSearchProps("paidAt"),
     },
   ];
   return (
     <div>
       <h3 className="grey mt-5 mx-5">
         {" "}
-        {userInfo && userInfo.data && userInfo.data.attributes.full_name}'s
+        {userInfo && userInfo.full_name}'s
         Bookings
       </h3>
       <Table
@@ -240,6 +262,7 @@ function Booking() {
         }}
       />
     </div>
+  
   );
 }
 
