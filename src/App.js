@@ -42,6 +42,9 @@ import Payment from "./component/Payment/Payment";
 import PaymentSuccess from "./component/Payment/PaymentSuccess";
 import ConfirmBooking from "./component/Payment/ConfirmBooking";
 
+import MiddlePage from "./component/Authentication/MiddlePage";
+import Dashboard from "./component/SubAdmin/Dashboard/Dashboard";
+
 export default function App() {
   AOS.init({
     offset: 200, // offset (in px) from the original trigger point
@@ -91,10 +94,12 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/properties" element={<Property />} />
             <Route path="/login" element={<Login />} />
+
             <Route path="/signup" element={<SignUp />} />
             <Route path="/properties/:id" element={<PropertyDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/signuprole" element={<MiddlePage />} />
 
             <Route
               path="/users/appointments"
@@ -142,6 +147,16 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <PaymentSuccess />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              exact
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <Dashboard />
                 </ProtectedRoute>
               }
             />

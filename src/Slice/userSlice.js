@@ -3,6 +3,7 @@ import { registerUser, userLocation, userLogin } from "../Action/userAction";
 
 
 
+
 const initialState = {
   userInfo: {},
   loading: false,
@@ -13,7 +14,9 @@ const initialState = {
   location: null
 };
 
- initialState.userToken = localStorage.getItem("userToken")
+
+
+  initialState.userToken = localStorage.getItem("userToken")
   ? localStorage.getItem("userToken")
   : null;
 
@@ -30,7 +33,6 @@ const userSlice = createSlice({
       localStorage.removeItem('userToken');
       state.userToken = null;
       localStorage.removeItem('isAuthenticated');
-      state.isAuthenticated = false;
     },
     setCredentials: (state, { payload }) => {
       state.userInfo = payload.data.attributes;
@@ -45,6 +47,7 @@ const userSlice = createSlice({
     },
     clearErrors: (state, {payload}) => {
       state.error = null;
+      state.success = false;
     }
   },
   extraReducers: (builder) => {

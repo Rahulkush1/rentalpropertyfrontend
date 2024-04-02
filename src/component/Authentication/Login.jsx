@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, fetchUser } from "../../Slice/userSlice";
 import { userLogin } from "../../Action/userAction";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [user, setUser] = useState({});
   const { userInfo, loading, isAuthenticated, error } = useSelector(
     (state) => state.user
@@ -26,7 +27,8 @@ function Login() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+
+    if (isAuthenticated  ) {
       navigate("/");
       toast.success("Login Successfully", {
         position: "top-right",
@@ -102,7 +104,7 @@ function Login() {
                 <br />
                 social network
               </span>
-              <Link to={"/signup"}>
+              <Link to={"/signuprole"}>
                 <button className="social-signin gmail">SignUp</button>
               </Link>
             </div>

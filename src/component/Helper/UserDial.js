@@ -16,6 +16,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from "react-router-dom";
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
@@ -31,9 +32,18 @@ const UserDial = ({user}) => {
     { icon: <AccountBoxIcon />, name: "Profile", func: account },
     { icon: <BookOnlineIcon />, name: "Appointments", func: appointment },
     { icon: <CheckIcon   />, name: "Booked Property", func: booking },
-    { icon: <ShareIcon />, name: "Share" },
   ];
-  
+  if (user.role === "owner" || user.role === "broker") {
+		actions.unshift({
+			icon: <DashboardIcon />,
+			name: "Dashboard",
+			func: Dashboard,
+		});
+	}
+
+  function Dashboard() {
+    navigate('/admin/dashboard')
+  }
   function appointment() {
     navigate('/users/appointments');
   }
