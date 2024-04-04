@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./SignUp.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../Action/userAction";
 import { toast } from "react-toastify";
 import { clearErrors } from "../../Slice/userSlice";
 
 function Signup() {
-  const [userData, setUserData] = useState({});
+  const [searchParams] = useSearchParams()
+  const [userData, setUserData] = useState({
+    role: searchParams.get('role')
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,6 +21,7 @@ function Signup() {
     setUserData({ ...userData, [name]: value });
   };
 
+  console.log(userData)
   const Register = (e) => {
     e.preventDefault();
     if (userData.password === userData.password2) {
@@ -137,7 +141,7 @@ function Signup() {
               <button className="social-signin gmail">Log in with Email</button>
             </Link>
             <button className="social-signin facebook">
-              Log in with facebook
+              Log in with facebook  
             </button>
             <button className="social-signin google">Log in with Google</button>
           </div>

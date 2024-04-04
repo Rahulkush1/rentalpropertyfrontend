@@ -4,10 +4,11 @@ import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Slice/userSlice";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const location = useLocation()
   const navVisibility =
     window.location.pathname === "/login" ||
@@ -45,6 +46,7 @@ function Navbar() {
     
     dispatch(logout());
   }
+
   return (
     <>
       <nav
@@ -70,7 +72,7 @@ function Navbar() {
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
               <li className='nav-item'>
                 <Link
-                  className={`nav-link  nav-link-ltr ${location.pathname === "/" ? "active" : ""}`}
+                  className={`nav-link cd  nav-link-ltr ${location.pathname === "/" ? "active" : ""}`}
                   aria-current="page"
                   to="/"
                 >
@@ -129,11 +131,22 @@ function Navbar() {
               {isAuthenticated ? (
                 <>
                   <li className="nav-item">
-                    <Link >
+                    <Link to={'/admin/login'}>
                       <Button
                         variant="outlined"
                         color="success"
                         style={{ color: "white" }}
+                      >
+                        Post Property
+                      </Button>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link >
+                      <Button
+                        variant="outlined"
+                        color="success"
+                        style={{ color: "white", marginLeft: "5px"  }}
                         onClick={userlogout}
                       >
                         Logout
@@ -148,14 +161,14 @@ function Navbar() {
                       <Button
                         variant="outlined"
                         color="success"
-                        style={{ color: "white" }}
+                        style={{ color: "white", }}
                       >
                         Login
                       </Button>
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link to={"/signup"}>
+                  <li className="nav-item ">
+                    <Link to={"/signuprole"}>
                       <Button
                         variant="outlined"
                         color="success"

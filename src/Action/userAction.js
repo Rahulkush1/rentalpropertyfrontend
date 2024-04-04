@@ -5,8 +5,9 @@ import { BASE_URL } from "../App";
 export const registerUser = createAsyncThunk(
     'auth/register',
     async ({ userData}, { rejectWithValue }) => {
+      console.log(userData)
       try {
-        const {email , password } = userData
+        const {email , password , first_name, last_name, role} = userData
         const config = {
           headers: {
             'Content-Type': 'application/json',
@@ -14,7 +15,7 @@ export const registerUser = createAsyncThunk(
         }
         const data = await axios.post(
           `${BASE_URL}/users/registerations`,
-          { user: {email, password}},
+          { user: {email, password,first_name, last_name, role}},
           config
         )
         return data
