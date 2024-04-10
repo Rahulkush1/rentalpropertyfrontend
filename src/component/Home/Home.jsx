@@ -168,7 +168,7 @@ function Home() {
                   recomdend.map((current) => {
                     return (
                       <div
-                        className="col-lg-3 gy-5"
+                        className="col-lg-3 col-md-4 col-sm-6 col-6 gy-5"
                         key={current.attributes.id}
                       >
                         <PropCard data={current} />
