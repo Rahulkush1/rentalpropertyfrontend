@@ -1,0 +1,32 @@
+.image-card{
+    width: 18vmax;
+}
+
+.card-content{
+    font-size: 1vmax;
+}
+@media screen and (min-width: 1000px) and (max-width: 1470px) {
+    .image-card{
+        width: 20vmax;
+    }
+}
+
+@media screen and (min-width: 100px) and (max-width: 960px) {
+    .image-card{
+        width: 20vmax;
+        /* height: 50vmax; */
+        
+    }
+    .card_title{
+        font-size: 1.5vmax !important;
+    }
+    .card_price{
+        font-size: 1.5vmax !important;
+    }
+    .card-content{
+        font-size: 1vmax !important;
+    }
+    .card-btn{
+       width: 1vmax !important;
+    }
+}
