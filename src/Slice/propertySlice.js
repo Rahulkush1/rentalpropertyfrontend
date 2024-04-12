@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   CreatePropertyReview,
+  createProperty,
   fetchAllProperty,
   fetchPropertyDetails,
   fetchRecomendendProperty,
+  getAdminProperties,
 } from "../Action/propertyAction";
 
 const initialState = {
@@ -86,6 +88,31 @@ const propertySlice = createSlice({
       .addCase(CreatePropertyReview.rejected, (state,{payload}) => {
         state.loading = false;
         state.error = payload
+      })
+      .addCase(getAdminProperties.fulfilled, (state, { payload }) => {
+        state.properties = payload.properties.data;
+        state.loading = false;
+        state.totalpropertycount = payload.total_property_count;
+      })
+      .addCase(getAdminProperties.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(getAdminProperties.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createProperty.fulfilled, (state, { payload }) => {
+        state.property = payload;
+        state.loading = false;
+      })
+      .addCase(createProperty.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(createProperty.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
   },
 });

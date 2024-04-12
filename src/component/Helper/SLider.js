@@ -20,6 +20,7 @@ export default function SLider({cities}) {
         spaceBetween={0}
         modules={[Pagination]}
         className="mySwiper"
+        
       >
         {cities && cities.map((currentValue, index) => {
           return (

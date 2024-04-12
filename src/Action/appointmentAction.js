@@ -83,3 +83,30 @@ export const getAppointment = createAsyncThunk(
       }
     }
   );
+
+  export const getAdminAppointments = createAsyncThunk(
+    "get/all/appointments/admin",
+    async (id, { rejectWithValue }) => {
+      try {
+        const config = {
+          headers: {
+            Content_type: "application/json",
+            auth_token: localStorage.getItem("userToken"),
+          },
+        };
+  
+        const {data} = await axios.get(
+          `${BASE_URL}/users/appointments`,
+          config
+        );
+
+        return data.data;
+      } catch (error) {
+        if (error.response && error.response.data.message) {
+          return rejectWithValue(error.response.data.message);
+        } else {
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  );

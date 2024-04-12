@@ -38,6 +38,7 @@ export default function PropCard({ data }) {
               Show
             </Button>
           <Button variant="outlined" href="#contained-buttons">
+
             Schedule
           </Button>
         </CardContent>

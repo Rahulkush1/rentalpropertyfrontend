@@ -44,6 +44,9 @@ import ConfirmBooking from "./component/Payment/ConfirmBooking";
 
 import MiddlePage from "./component/Authentication/MiddlePage";
 import Dashboard from "./component/SubAdmin/Dashboard/Dashboard";
+import AdminProperty from "./component/SubAdmin/Property/Property"
+import NewProperty from "./component/SubAdmin/Property/NewProperty";
+import MultiStep from 'react-multistep'
 
 export default function App() {
   AOS.init({
@@ -157,6 +160,33 @@ export default function App() {
               element={
                 <ProtectedRoute isAdmin={true}>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/admin/properties"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <AdminProperty />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/admin/property"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <NewProperty />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/admin/property/edit/:property_id"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <NewProperty />
                 </ProtectedRoute>
               }
             />

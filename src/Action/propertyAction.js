@@ -39,6 +39,7 @@ export const fetchAllProperty = createAsyncThunk(
   }
 );
 
+
 export const fetchPropertyDetails = createAsyncThunk(
   "fetch/propertyDetails",
   async (id, { rejectWithValue }) => {
@@ -107,6 +108,59 @@ export const CreatePropertyReview = createAsyncThunk(
       );
       return data;
     } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const getAdminProperties = createAsyncThunk(
+  "property/all/admin",
+  async (filter, { rejectWithValue }) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth_token: localStorage.getItem("userToken"),
+      },
+    };
+    try {
+      const resp = await axios.get(
+        `${BASE_URL}/properties/admin_properties?self_property=true`,
+        config
+      );
+      return resp.data;
+    } catch (error) {
+      // return custom error message from API if any
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const createProperty = createAsyncThunk(
+  "property/create",
+  async (data, { rejectWithValue }) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth_token: localStorage.getItem("userToken"),
+      },
+    };
+    try {
+      const resp = await axios.get(
+        `${BASE_URL}/properties/admin_properties?self_property=true`,
+        {data},
+        config
+      );
+      return resp.data;
+    } catch (error) {
+      // return custom error message from API if any
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {
