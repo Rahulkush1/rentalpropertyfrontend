@@ -30,3 +30,21 @@
 .no-data-img{
 	width: 30%;
 }
+.mobile-filter{
+	display: none;
+}
+.mobile-view{
+	display: none;
+}
+
+@media screen and (max-width: 1000px) {
+	.mobile-filter{
+		display: block !important;
+	}
+	.main_filter{
+		display: none;
+	}
+	.website-view{
+		display: none !important;
+	}
+}

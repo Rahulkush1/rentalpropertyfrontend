@@ -1,6 +1,19 @@
 .image-card{
     width: 18vmax;
 }
+.property-card{
+    width: 18rem !important;
+}
+.property-content > p {
+    font-size: 1vmax !important;
+}
+.property-content > h5 {
+    font-size: 1.3vmax !important;
+}
+.property-content > div > button  {
+    font-size: 1vmax !important;
+}
+
 
 .card-content{
     font-size: 1vmax;
@@ -9,24 +22,21 @@
     .image-card{
         width: 20vmax;
     }
+    .property-card{
+        width: 15rem !important;
+    }
+}
+
+@media screen and (min-width: 994px) and (max-width: 1100px) {
+    .property-card{
+        width: 13rem !important;
+        /* height: 14rem !important; */
+    }
 }
 
 @media screen and (min-width: 100px) and (max-width: 960px) {
-    .image-card{
-        width: 20vmax;
-        /* height: 50vmax; */
-        
-    }
-    .card_title{
-        font-size: 1.5vmax !important;
-    }
-    .card_price{
-        font-size: 1.5vmax !important;
-    }
-    .card-content{
-        font-size: 1vmax !important;
-    }
-    .card-btn{
-       width: 1vmax !important;
+    .property-card{
+        width: 11rem !important;
+        /* height: 14rem !important; */
     }
 }
