@@ -1,5 +1,5 @@
 .home_page_banner{
-	height: 73vh;
+	height: 67.4vh;
 	background-color: #362FD9;
 }
 .title-heading{
@@ -135,13 +135,40 @@ datalist {
 
 @media only screen and (max-width: 993px) {
 	.custom-shape-divider-bottom-1696315792 {
-        bottom: -1.6rem;
+        bottom: 6.5rem;
+    }
+    .home_page_banner{
+        height: 50.4vh;
+        background-color: #362FD9;
     }
     .form{
         position: absolute;
-        top: 40%;
+        top: 30%;
         left: 25%;
         width: 50%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+	.custom-shape-divider-bottom-1696315792 {
+        bottom: 8.2rem;
+    }
+    .home_page_banner{
+        height: 50.4vh;
+        background-color: #362FD9;
+    }
+    .form{
+        position: absolute;
+        top: 26%;
+        left: 18%;
+        width: 65%;
+    }
+    .form-input{
+        height: 55px;
+        text-indent: 1rem;
+        border-radius: 30px !important;
+        padding: 1rem 1rem !important;
+        outline: none !important;
     }
 }
 

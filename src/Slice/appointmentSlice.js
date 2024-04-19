@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createAppointment, getAllAppointmentloggedUser, getAppointment } from "../Action/appointmentAction";
+import { createAppointment, getAdminAppointments, getAllAppointmentloggedUser, getAppointment } from "../Action/appointmentAction";
 
 const initialState = {
     appointments: [],
@@ -63,6 +63,20 @@ const appointmentSlice = createSlice({
             state.error = null;
         })
         .addCase(getAllAppointmentloggedUser.rejected,(state,{payload}) => {
+            state.loading = false;
+            state.error = payload;
+        })
+        .addCase(getAdminAppointments.pending,(state) => {
+            state.loading= true;
+            state.error = null;
+
+        })
+        .addCase(getAdminAppointments.fulfilled, (state,{payload}) => {
+            state.loading = false;
+            state.appointments = payload;
+            state.error = null;
+        })
+        .addCase(getAdminAppointments.rejected,(state,{payload}) => {
             state.loading = false;
             state.error = payload;
         })

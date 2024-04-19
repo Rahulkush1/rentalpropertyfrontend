@@ -180,7 +180,7 @@ function Home() {
             <div className="bhk" data-aos="fade-down">
               <div className="row m-auto ">
                 <div className="col-lg-8 d-flex flex-column justify-content-center">
-                  <h1 className="main-heading my-3 ">
+                  <h1 className="main-heading my-3 grey">
                     Choose By <span className=" title-heading">BHK</span>
                   </h1>
                   <p className="text-secondary text-content">

@@ -73,7 +73,7 @@ const Property = () => {
       prop_type: null,
       posted: null,
       rating: null,
-      keyword: null
+      keyword: null,
     });
     setRatings(0);
     setPrice([0, 5000]);
@@ -89,9 +89,9 @@ const Property = () => {
         <div className="grey my-3">
           <Breadcrumb />
         </div>
-        <div className="row">
+        <div className="row ">
           <div
-            className="col-lg-2 "
+            className="col-lg-2 website-view "
             style={{ "border-right": "1px  solid var(--grey)" }}
           >
             <div className="main_filter">
@@ -106,9 +106,110 @@ const Property = () => {
                 HandlePosted={HandlePosted}
               />
             </div>
+           
           </div>
 
-          <div className="col-lg-10 properties scrollable">
+          <div className="col-lg-10  properties scrollable website-view">
+            <div className=" ">
+              <div className="sortDiv text-dark shadow-sm p-2 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
+                <div></div>
+                <h2 style={{ color: "var(--blue)" }}>
+                  {" "}
+                  Properties ({properties && properties.length})
+                </h2>
+                <div className="d-flex justify-content-between">
+                  <div className="d-flex  mx-4">
+                    <button
+                      id="list"
+                      onClick={ListView}
+                      className={
+                        view === "list" ? "activeList px-3 py-2 border-0" : ""
+                      }
+                    >
+                      <ReorderIcon />
+                    </button>
+                    <button
+                      id="grid"
+                      onClick={GridView}
+                      className={
+                        view === "grid" ? "activeGrid px-3 py-2 border-0" : ""
+                      }
+                    >
+                      <GridViewIcon />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {properties && properties.length == 0 ? (
+                <div className="d-flex justify-content-center align-itmes-center">
+                  <img src={NoData} className="img-fluid no-data-img" />
+                </div>
+              ) : loading ? (
+                <Loader />
+              ) : (
+                <div className="main-property row gy-5">
+                  {view === "grid" ? (
+                    <Grid properties={properties} />
+                  ) : (
+                    <List properties={properties} />
+                  )}
+                  <div className="d-flex justify-content-center">
+                    <Stack spacing={2}>
+                      <Pagination
+                        count={Math.ceil(totalpropertycount / 25)}
+                        variant="outlined"
+                        shape="rounded"
+                        onClick={setPageNo}
+                      />
+                    </Stack>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="col-lg-12 properties scrollable mobile-view">
+          <div className="mobile-filter" >
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample"
+              >
+                Filters
+              </button>
+
+              <div
+                class="offcanvas offcanvas-start"
+                tabindex="-1"
+                id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel"
+              >
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+                    Offcanvas
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="offcanvas-body">
+                  <FilterSection
+                    price={price}
+                    HandleChange={HandleChange}
+                    priceHandler={priceHandler}
+                    ratingHandler={ratingHandler}
+                    ratings={ratings}
+                    clearFilter={clearFilter}
+                    HandleType={HandleType}
+                    HandlePosted={HandlePosted}
+                  />
+                </div>
+              </div>
+            </div>
             <div className=" ">
               <div className="sortDiv text-dark shadow-sm p-2 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
                 <div></div>
@@ -167,6 +268,7 @@ const Property = () => {
             </div>
           </div>
         </div>
+
       </div>
     </>
   );

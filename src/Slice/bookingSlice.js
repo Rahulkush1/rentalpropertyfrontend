@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createBooking, getAllBookings, getBooking } from "../Action/bookingAction";
+import { createBooking, getAdminBookings, getAllBookings, getBooking } from "../Action/bookingAction";
 
 
 const initialState = {
@@ -66,6 +66,21 @@ const bookingSlice = createSlice({
             state.loading = false;
             state.error = payload;
             state.booking = null;
+        })
+        .addCase(getAdminBookings.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            
+        })
+        .addCase(getAdminBookings.fulfilled, (state, {payload}) => {
+            state.loading = false;
+            state.bookings = payload;
+            state.error = null;
+        })
+        .addCase(getAdminBookings.rejected,(state,{payload}) => {
+            state.loading = false;
+            state.error = payload;
+            state.bookings = null;
         })
 
   

@@ -156,6 +156,7 @@ function Navbar() {
                 </>
               ) : (
                 <>
+                <div className="d-flex">
                   <li className="nav-item">
                     <Link to={"/login"}>
                       <Button
@@ -178,6 +179,7 @@ function Navbar() {
                       </Button>
                     </Link>
                   </li>
+                  </div>
                 </>
               )}
             </ul>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createAppointment } from "../../Action/appointmentAction";
+import "./AppointmentForm.css"
 
 
 
@@ -39,7 +40,7 @@ const AppointmentForm = ({data, id}) => {
   return (
     <div>
       <div
-        class="modal fade"
+        class="modal fade appointmentForm"
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"

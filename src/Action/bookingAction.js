@@ -84,3 +84,32 @@ export const getBooking = createAsyncThunk(
     }
   }
 );
+
+
+
+export const getAdminBookings = createAsyncThunk(
+  "get/admin/booking",
+  async (id, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          Content_type: "application/json",
+          auth_token: localStorage.getItem("userToken"),
+        },
+      };
+
+      const {data} = await axios.get(
+        `${BASE_URL}/users/property/getAdminBookings`,
+        config
+      );
+
+      return data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
