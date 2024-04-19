@@ -2,41 +2,38 @@
     width: 18vmax;
 }
 .property-card{
-    width: 18rem !important;
+    width: 18vmax !important;
 }
 .property-content > p {
-    font-size: 1vmax !important;
+    font-size: 0.8vmax !important;
 }
 .property-content > h5 {
-    font-size: 1.3vmax !important;
+    font-size: 1vmax !important;
 }
 .property-content > div > button  {
-    font-size: 1vmax !important;
+    font-size: 0.8vmax !important;
 }
 
 
 .card-content{
-    font-size: 1vmax;
+    font-size: 0.8vmax;
 }
 @media screen and (min-width: 1000px) and (max-width: 1470px) {
-    .image-card{
-        width: 20vmax;
-    }
-    .property-card{
-        width: 15rem !important;
-    }
+    /* .property-card{
+        width: 15vmax !important;
+    } */
 }
 
 @media screen and (min-width: 994px) and (max-width: 1100px) {
-    .property-card{
+    /* .property-card{
         width: 13rem !important;
-        /* height: 14rem !important; */
-    }
+        height: 14rem !important;
+    } */
 }
 
-@media screen and (min-width: 100px) and (max-width: 960px) {
+@media screen and (min-width: 100px) and (max-width: 994px) {
     .property-card{
-        width: 11rem !important;
+        width: 25vmax !important;
         /* height: 14rem !important; */
     }
 }

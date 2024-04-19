@@ -57,7 +57,7 @@ export default function PropCard({ data }) {
       </CardActionArea>
     </Card> */}
 
-      <div class="card property-card" >
+      <div class="card property-card m-auto" >
         <img
           src={`http://localhost:5000/${data.attributes.avatar[0]}`}
           class="card-img-top"
