@@ -131,17 +131,6 @@ function Navbar() {
               {isAuthenticated ? (
                 <>
                   <li className="nav-item">
-                    <Link to={'/admin/login'}>
-                      <Button
-                        variant="outlined"
-                        color="success"
-                        style={{ color: "white" }}
-                      >
-                        Post Property
-                      </Button>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
                     <Link >
                       <Button
                         variant="outlined"

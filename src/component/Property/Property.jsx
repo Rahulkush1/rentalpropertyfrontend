@@ -85,13 +85,13 @@ const Property = () => {
   console.log(filter);
   return (
     <>
-      <div className=" m-5 ">
-        <div className="grey my-3">
+      <div className=" mt-5 ">
+        <div className="grey my-3 mx-3">
           <Breadcrumb />
         </div>
         <div className="row ">
           <div
-            className="col-lg-2 website-view "
+            className="col-lg-2  "
             style={{ "border-right": "1px  solid var(--grey)" }}
           >
             <div className="main_filter">
@@ -106,69 +106,7 @@ const Property = () => {
                 HandlePosted={HandlePosted}
               />
             </div>
-           
-          </div>
-
-          <div className="col-lg-10  properties scrollable website-view">
-            <div className=" ">
-              <div className="sortDiv text-dark shadow-sm p-2 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
-                <div></div>
-                <h2 style={{ color: "var(--blue)" }}>
-                  {" "}
-                  Properties ({properties && properties.length})
-                </h2>
-                <div className="d-flex justify-content-between">
-                  <div className="d-flex  mx-4">
-                    <button
-                      id="list"
-                      onClick={ListView}
-                      className={
-                        view === "list" ? "activeList px-3 py-2 border-0" : ""
-                      }
-                    >
-                      <ReorderIcon />
-                    </button>
-                    <button
-                      id="grid"
-                      onClick={GridView}
-                      className={
-                        view === "grid" ? "activeGrid px-3 py-2 border-0" : ""
-                      }
-                    >
-                      <GridViewIcon />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              {properties && properties.length == 0 ? (
-                <div className="d-flex justify-content-center align-itmes-center">
-                  <img src={NoData} className="img-fluid no-data-img" />
-                </div>
-              ) : loading ? (
-                <Loader />
-              ) : (
-                <div className="main-property row gy-5">
-                  {view === "grid" ? (
-                    <Grid properties={properties} />
-                  ) : (
-                    <List properties={properties} />
-                  )}
-                  <div className="d-flex justify-content-center">
-                    <Stack spacing={2}>
-                      <Pagination
-                        count={Math.ceil(totalpropertycount / 25)}
-                        variant="outlined"
-                        shape="rounded"
-                        onClick={setPageNo}
-                      />
-                    </Stack>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="col-lg-12 properties scrollable mobile-view">
-          <div className="mobile-filter" >
+            <div className="mobile-filter mx-3 my-3" >
               <button
                 class="btn btn-primary"
                 type="button"
@@ -210,14 +148,18 @@ const Property = () => {
                 </div>
               </div>
             </div>
+           
+          </div>
+
+          <div className="col-lg-10  properties scrollable ">
             <div className=" ">
               <div className="sortDiv text-dark shadow-sm p-2 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
                 <div></div>
-                <h2 style={{ color: "var(--blue)" }}>
+                <h2 style={{ color: "var(--blue)" }} className="m-auto">
                   {" "}
                   Properties ({properties && properties.length})
                 </h2>
-                <div className="d-flex justify-content-between">
+                <div className=" website-view">
                   <div className="d-flex  mx-4">
                     <button
                       id="list"
@@ -247,7 +189,7 @@ const Property = () => {
               ) : loading ? (
                 <Loader />
               ) : (
-                <div className="main-property row gy-5">
+                <div className="main-property row gy-5 ">
                   {view === "grid" ? (
                     <Grid properties={properties} />
                   ) : (
