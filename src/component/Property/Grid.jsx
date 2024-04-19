@@ -8,7 +8,7 @@ const Grid= ({properties}) => {
             properties && properties.map((currentData,index)=>{
                 return (
                     <>
-                        <div className="col-lg-3 col-md-4 col-6">
+                        <div className="col-lg-3  col-md-4 col-6">
                             <PropCard data = {currentData} key={index} />
                         </div>
                     </>

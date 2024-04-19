@@ -154,20 +154,20 @@ const PropertyDetails = () => {
                   </div>
                 </div>
                 <div className="col-lg-4">
-                  <div className="d-flex flex-column justify-content-between">
+                  <div className=" property-images">
                     <img
                       src={`http://localhost:5000/${
                         property && property.avatar && property.avatar[0]
                       }`}
                       alt=""
-                      className="img-fluid mb-3  property_img"
+                      className="img-fluid mx-2  my-2 property_img"
                     />
                     <img
                       src={`http://localhost:5000/${
                         property && property.avatar && property.avatar[0]
                       }`}
                       alt=""
-                      className="img-fluid  property_img"
+                      className="img-fluid mx-2 my-2  property_img"
                     />
                   </div>
                 </div>
@@ -189,7 +189,7 @@ const PropertyDetails = () => {
                       data-bs-target="#exampleModal"
                       data-bs-whatever="@getbootstrap"
                       variant="contained"
-                      className="fw-bold text-center fs-5 px-5 floating"
+                      className="fw-bold text-center  floating"
                       disabled={true}
                     >
                       <LocalPhoneIcon className="mx-2 " /> Sold
@@ -204,7 +204,7 @@ const PropertyDetails = () => {
                         data-bs-target="#exampleModal"
                         data-bs-whatever="@getbootstrap"
                         variant="contained"
-                        className="fw-bold text-center fs-5 px-5 floating"
+                        className="fw-bold text-center  floating"
                         disabled={true}
                       >
                         <LocalPhoneIcon className="mx-2 " /> Meeting Scheduled
@@ -215,7 +215,7 @@ const PropertyDetails = () => {
                         data-bs-target="#exampleModal"
                         data-bs-whatever="@getbootstrap"
                         variant="contained"
-                        className="fw-bold text-center fs-5 px-5 floating"
+                        className="fw-bold text-center  floating"
                       >
                         <LocalPhoneIcon className="mx-2 " /> Reserve Your Space
                         Now
@@ -227,7 +227,7 @@ const PropertyDetails = () => {
                       data-bs-target="#exampleModal"
                       data-bs-whatever="@getbootstrap"
                       variant="contained"
-                      className="fw-bold text-center fs-5 px-5 floating"
+                      className="fw-bold text-center  floating"
                     >
                       <LocalPhoneIcon className="mx-2 " /> Schedule Meeting
                     </Button>
@@ -322,7 +322,7 @@ const PropertyDetails = () => {
                   data-aos="fade-right"
                 >
                   <h4 className="grey">Property Description</h4>
-                  <p>
+                  <p className="property-details-note">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Adipisci distinctio fuga veniam sed, sunt enim? Sit
                     obcaecati necessitatibus praesentium nihil vero itaque
@@ -382,7 +382,7 @@ const PropertyDetails = () => {
                     <div className="card-header">Note</div>
                     <div className="card-body text-primary">
                       <h5 className="card-title">Schedule Visit Appointment</h5>
-                      <p className="card-text grey ">
+                      <p className="card-text grey property-details-note">
                         Are you eager to explore our range of properties, from
                         cozy rooms to spacious PGs?
                         <br />
@@ -421,7 +421,7 @@ const PropertyDetails = () => {
                     <div className="card-header">Book </div>
                     <div className="card-body text-primary">
                       <h5 className="card-title">Reserve Your Space </h5>
-                      <p className="card-text grey">
+                      <p className="card-text grey property-details-note">
                         Are you ready to find your ideal space? Our range of
                         PGs, rooms, and flats await, offering comfort and
                         convenience tailored to your needs.
@@ -452,7 +452,7 @@ const PropertyDetails = () => {
                   <div className="card-header">Note</div>
                   <div className="card-body text-primary">
                     <h5 className="card-title">Schedule Visit Appointment</h5>
-                    <p className="card-text grey ">
+                    <p className="card-text grey property-details-note ">
                       Are you eager to explore our range of properties, from
                       cozy rooms to spacious PGs?
                       <br />
@@ -579,7 +579,7 @@ const PropertyDetails = () => {
             <h4 className="grey text-center">Review </h4>
             <div>
               <p className="grey">Create Review</p>
-              <div class="card w-25 mb-3 ">
+              <div class="card  mb-3  review-form">
                 <div class="card-body">
                   <form onSubmit={SubmitReview}>
                     <div className="mb-3">
