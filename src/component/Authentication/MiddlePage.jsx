@@ -9,32 +9,37 @@ import { clearErrors } from "../../Slice/userSlice";
 function MiddlePage() {
   return (
     <>
-      <div className="home_page_banner2"></div>
-      <div className="custom-shape-divider-top-1706701667">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M1200 0L0 0 892.25 114.72 1200 0z"
-            className="shape-fill"
-          ></path>
-        </svg>
-      </div>
-      <div className="MiddlePage">
-        <div className="center d-flex flex-column justify-content-center align-items-center">
-          <Link to={"/signup?role=owner"}>
-            <button className="owner-btn my-3">Owner</button>
-          </Link>
-          <Link to={"/signup?role=broker"}>
-            <button className="broker-btn facebook my-3">Broker</button>
-          </Link>
-          <Link to={"/signup?role=buyer"}>
-            <button className="buyer-btn google my-3">Buyer</button>
-          </Link>
-        </div>
+      <div className="auth-container">
+        <section class="h-100">
+          <div class="container h-100">
+            <div class="row justify-content-sm-center h-100">
+              <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5"></div>
+                <div class="card shadow-lg">
+                  <div class="card-body p-5">
+                    <h1 class="fs-4 card-title fw-bold mb-4">Register As</h1>
+                    <div className="center d-flex flex-column justify-content-center align-items-center">
+                      <Link to={"/signup?role=owner"}>
+                        <button className="owner-btn my-3">Owner</button>
+                      </Link>
+                      <Link to={"/signup?role=broker"}>
+                        <button className="broker-btn facebook my-3">
+                          Broker
+                        </button>
+                      </Link>
+                      <Link to={"/signup?role=buyer"}>
+                        <button className="buyer-btn google my-3">Buyer</button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center mt-5 text-muted">
+                Copyright &copy; 2017- {new Date().getFullYear()} &mdash; RentalProperty
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
