@@ -33,6 +33,7 @@ const userSlice = createSlice({
       localStorage.removeItem('userToken');
       state.userToken = null;
       localStorage.removeItem('isAuthenticated');
+      state.isAuthenticated = false;
     },
     setCredentials: (state, { payload }) => {
       state.userInfo = payload.data.attributes;

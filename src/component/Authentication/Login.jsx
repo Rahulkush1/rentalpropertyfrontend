@@ -119,6 +119,8 @@ function Login() {
                           name="password"
                           required
                           value={user.password}
+                          onChange={HandleLogin}
+
                         />
                         <div className="invalid-feedback">Password is required</div>
                       </div>
