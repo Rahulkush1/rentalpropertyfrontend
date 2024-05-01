@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 import { getAllBookings } from "../../Action/bookingAction";
 import Formatprice from "../Helper/FormatPrice";
+import "./Booking.css"
 
 function Booking() {
   const dispatch = useDispatch();
@@ -161,25 +162,6 @@ function Booking() {
       sorter: (a, b) => a.id - b.id,
       sortDirections: ["descend", "ascend"],
     },
-    // {
-    //   title: "Name",
-    //   dataIndex: "name",
-    //   key: "name",
-    //   width: "20%",
-    //   ...getColumnSearchProps("name"),
-    //   sorter: (a, b) => a.name - b.name,
-    //   sortDirections: ["descend", "ascend"],
-    // },
-
-    // {
-    //   title: "Date",
-    //   dataIndex: "date",
-    //   key: "date",
-    //   with: "20%",
-    //   ...getColumnSearchProps("date"),
-    //   sorter: (a, b) => a.date - b.date,
-    //   sortDirections: ["descend", "ascend"],
-    // },
     {
       title: "Property",
       dataIndex: "property",
@@ -235,16 +217,15 @@ function Booking() {
     },
   ];
   return (
-    <div>
+    <div className=" ">
       <h3 className="grey mt-5 mx-5">
-        {" "}
         {userInfo && userInfo.full_name}'s
         Bookings
       </h3>
       <Table
         columns={columns}
         dataSource={data}
-        className="mx-5  m-auto mt-5 shadow p-3 mb-5 bg-body-tertiary rounded "
+        className=" booking-table m-auto mt-5 shadow p-3 mb-5 bg-body-tertiary rounded table-responsive mx-4"
         loading={loading}
         pagination={{
           pageSize: 10, // Number of items per page
@@ -253,12 +234,6 @@ function Booking() {
           showQuickJumper: true, // Show quick jumper
           showTotal: (total, range) =>
             `Showing ${range[0]}-${range[1]} of ${total} items`, // Display total number of items
-          // onChange: (page, pageSize) => {
-
-          // },
-          // onShowSizeChange: (current, size) => {
-          //   // Handle size change here if needed
-          // }
         }}
       />
     </div>

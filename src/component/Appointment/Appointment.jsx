@@ -226,7 +226,7 @@ function Appointment() {
       <Table
         columns={columns}
         dataSource={data}
-        className="mx-5  m-auto mt-5 shadow p-3 mb-5 bg-body-tertiary rounded "
+        className="mx-3  m-auto mt-5 shadow p-3 mb-5 bg-body-tertiary rounded table-responsive "
         loading={loading}
         pagination={{
           pageSize: 10, // Number of items per page
